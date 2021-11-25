@@ -335,44 +335,12 @@ public class Jeu{
 	public void deplacerPiece(int x, int y){
 		boolean deplacementSucces = false;
 		
-		Roi[] rois = new Roi[2];
-		rois[0] = plateau.getRoiB();
-		rois[1] = plateau.getRoiN();
-		
 		int valeurPrerequis = recherchePrerequis(pieceSelectionee, x, y);
 		
 		//Deplace la piece selectionne
 		if(pieceSelectionee.deplacer(x, y)){
 			CoupPGN coup = historique.getDernierCoup();
 			coup.setPrerequis(valeurPrerequis);
-			for(int i = 0; i < rois.length; i++){
-				//Si le roi est en echec
-				if(rois[i].estEchec()){
-					fenetre.addLogPartie("Le roi "+rois[i].getCouleur().toLowerCase()+" est en echec");
-					//Si le joueur viens de mettre son roi en echec
-					if(joueurCourant.getCouleur().equals(rois[i].getCouleur())){
-						plateau.annulerDernierCoup(true);
-						fenetre.addLogPartie("Vous ne pouvez pas mettre votre roi en echec");
-						break;
-					//Si le roi est en echec et mat
-					}else if(rois[i].estEchecEtMat()){
-						coup.isEchecMat = true;
-						fenetre.addLogPartie("Echec et Mat sur le roi "+rois[i].getCouleur().toLowerCase());
-						fermerThreadIA();
-						fenetre.repaint();
-						fenetre.fenetreSauvegarde((joueurCourant.getCouleur().equals("BLANC"))? Partie.WHITE_WIN : Partie.BLACK_WIN	);
-					//Sinon c'est le joueur adverse qui a cause l'echec
-					}else{
-						coup.isEchec = true;
-					}
-				}else{
-					if(!rois[i].getCouleur().equals(joueurCourant.getCouleur()) && rois[i].estPat()){
-						fenetre.addLogPartie("Egalite");
-						fenetre.repaint();
-						fenetre.fenetreSauvegarde(Partie.EGALITE);
-					}
-				}
-			}
 			switchJoueur();
 			deplacementSucces = true;
 		}
@@ -430,7 +398,7 @@ public class Jeu{
 			
 			if(coup.isPetitRoque){
 				int colonne = (joueurCourant.getCouleur().equals("BLANC"))? 0 : 7;
-				if(plateau.getCase(7,  colonne) == null || !(plateau.getCase(7, colonne ) instanceof Tour)){
+				/*if(plateau.getCase(7,  colonne) == null || !(plateau.getCase(7, colonne ) instanceof Tour)){
 					JOptionPane.showMessageDialog(null, "Erreur lors du chargement de l'historique des coups.\nRaison : coup "+coup.toString()+" n'a pas la tour en position de roquer.", "Erreur lors du chargement de l'historique", JOptionPane.ERROR_MESSAGE);
 					this.reset();
 					return false;
@@ -501,7 +469,7 @@ public class Jeu{
 				plateau.setCase(4, colonne, null);
 				plateau.setCase(2, colonne, r);
 				coup.arrivee.x = 2;
-				coup.arrivee.y = colonne;
+				coup.arrivee.y = colonne;*/
 			}else if(coup.nomPiece == ' '){
 				ArrayList<Pion> pions = plateau.getPions(joueurCourant.getCouleur());
 				boolean coupValide = false;
@@ -514,19 +482,6 @@ public class Jeu{
 							if(coup.isTransformation){
 								plateau.setCase(p.getX(), p.getY(), null);
 								coup.departMemoire.set(p.getX(), p.getY());
-								if(coup.nomPieceTransformation == CoupPGN.CAVALIER){
-									Cavalier c = new Cavalier(coup.arrivee.x, coup.arrivee.y, p.getCouleur(), plateau);
-									plateau.setCase(coup.arrivee.x, coup.arrivee.y, c);
-								}else if(coup.nomPieceTransformation == CoupPGN.FOU){
-									Fou c = new Fou(coup.arrivee.x, coup.arrivee.y, p.getCouleur(), plateau);
-									plateau.setCase(coup.arrivee.x, coup.arrivee.y, c);
-								}else if(coup.nomPieceTransformation == CoupPGN.TOUR){
-									Tour c = new Tour(coup.arrivee.x, coup.arrivee.y, p.getCouleur(), plateau);
-									plateau.setCase(coup.arrivee.x, coup.arrivee.y, c);
-								}else if(coup.nomPieceTransformation == CoupPGN.REINE){
-									Reine c = new Reine(coup.arrivee.x, coup.arrivee.y, p.getCouleur(), plateau);
-									plateau.setCase(coup.arrivee.x, coup.arrivee.y, c);
-								}
 							}else{
 								coup.departMemoire.set(p.getX(), p.getY());
 								plateau.setCase(coup.arrivee.x, coup.arrivee.y, p);
@@ -542,123 +497,6 @@ public class Jeu{
 				}
 				if(!coupValide){
 					JOptionPane.showMessageDialog(null, "Erreur lors du chargement de l'historique des coups.\nRaison : "+coup.toString()+" : aucun pion ne correspond au coup.", "Erreur lors du chargement de l'historique des coups", JOptionPane.ERROR_MESSAGE);
-					this.reset();
-					return false;
-				}
-			}else if(coup.nomPiece == CoupPGN.TOUR){
-				ArrayList<Tour> pions = plateau.getTours(joueurCourant.getCouleur());
-				boolean coupValide = false;
-				for(Tour p: pions){
-					if(p.mouvementPossible(coup.arrivee.x, coup.arrivee.y) && p.coupPossible(coup.arrivee.x, coup.arrivee.y)){
-						if(coup.depart.x != -1 && coup.depart.y != -1 && coup.depart.x == p.getX() && coup.depart.y == p.getY()
-								|| coup.depart.x != -1 && coup.depart.x == p.getX()
-								|| coup.depart.y != -1 && coup.depart.y == p.getY()
-								|| coup.depart.x == -1 && coup.depart.y == -1){
-							coup.departMemoire.set(p.getX(), p.getY());
-							plateau.setCase(coup.arrivee.x, coup.arrivee.y, p);
-							plateau.setCase(p.getX(), p.getY(), null);
-							p.setX(coup.arrivee.x);
-							p.setY(coup.arrivee.y);
-							coupValide = true;
-							break;
-						}
-					}
-				}
-				if(!coupValide){
-					JOptionPane.showMessageDialog(null, "Erreur lors du chargement de l'historique des coups.\nRaison : "+coup.toString()+" : aucune tour ne correspond au coup.", "Erreur lors du chargement de l'historique des coups", JOptionPane.ERROR_MESSAGE);
-					this.reset();
-					return false;
-				}
-			}else if(coup.nomPiece == CoupPGN.FOU){
-				ArrayList<Fou> pions = plateau.getFous(joueurCourant.getCouleur());
-				boolean coupValide = false;
-				for(Fou p: pions){
-					if(p.mouvementPossible(coup.arrivee.x, coup.arrivee.y) && p.coupPossible(coup.arrivee.x, coup.arrivee.y)){
-						if(coup.depart.x != -1 && coup.depart.y != -1 && coup.depart.x == p.getX() && coup.depart.y == p.getY()
-								|| coup.depart.x != -1 && coup.depart.x == p.getX()
-								|| coup.depart.y != -1 && coup.depart.y == p.getY()
-								|| coup.depart.x == -1 && coup.depart.y == -1){
-							coup.departMemoire.set(p.getX(), p.getY());
-							plateau.setCase(coup.arrivee.x, coup.arrivee.y, p);
-							plateau.setCase(p.getX(), p.getY(), null);
-							p.setX(coup.arrivee.x);
-							p.setY(coup.arrivee.y);
-							coupValide = true;
-							break;
-						}
-					}
-				}
-				if(!coupValide){
-					JOptionPane.showMessageDialog(null, "Erreur lors du chargement de l'historique des coups.\nRaison : "+coup.toString()+" : aucun fou ne correspond au coup.", "Erreur lors du chargement de l'historique des coups", JOptionPane.ERROR_MESSAGE);
-					this.reset();
-					return false;
-				}
-			}else if(coup.nomPiece == CoupPGN.CAVALIER){
-				ArrayList<Cavalier> pions = plateau.getCavaliers(joueurCourant.getCouleur());
-				boolean coupValide = false;
-				for(Cavalier p: pions){
-					if(p.mouvementPossible(coup.arrivee.x, coup.arrivee.y) && p.coupPossible(coup.arrivee.x, coup.arrivee.y)){
-						if(coup.depart.x != -1 && coup.depart.y != -1 && coup.depart.x == p.getX() && coup.depart.y == p.getY()
-								|| coup.depart.x != -1 && coup.depart.x == p.getX()
-								|| coup.depart.y != -1 && coup.depart.y == p.getY()
-								|| coup.depart.x == -1 && coup.depart.y == -1){
-							coup.departMemoire.set(p.getX(), p.getY());
-							plateau.setCase(coup.arrivee.x, coup.arrivee.y, p);
-							plateau.setCase(p.getX(), p.getY(), null);
-							p.setX(coup.arrivee.x);
-							p.setY(coup.arrivee.y);
-							coupValide = true;
-							break;
-						}
-					}
-				}
-				if(!coupValide){
-					JOptionPane.showMessageDialog(null, "Erreur lors du chargement de l'historique des coups.\nRaison : "+coup.toString()+" : aucun cavalier ne correspond au coup.", "Erreur lors du chargement de l'historique des coups", JOptionPane.ERROR_MESSAGE);
-					this.reset();
-					return false;
-				}
-			}else if(coup.nomPiece == CoupPGN.REINE){
-				ArrayList<Reine> pions = plateau.getReines(joueurCourant.getCouleur());
-				boolean coupValide = false;
-				for(Reine p: pions){
-					if(p.mouvementPossible(coup.arrivee.x, coup.arrivee.y) && p.coupPossible(coup.arrivee.x, coup.arrivee.y)){
-						if(coup.depart.x != -1 && coup.depart.y != -1 && coup.depart.x == p.getX() && coup.depart.y == p.getY()
-								|| coup.depart.x != -1 && coup.depart.x == p.getX()
-								|| coup.depart.y != -1 && coup.depart.y == p.getY()
-								|| coup.depart.x == -1 && coup.depart.y == -1){
-							coup.departMemoire.set(p.getX(), p.getY());
-							plateau.setCase(coup.arrivee.x, coup.arrivee.y, p);
-							plateau.setCase(p.getX(), p.getY(), null);
-							p.setX(coup.arrivee.x);
-							p.setY(coup.arrivee.y);
-							coupValide = true;
-							break;
-						}
-					}
-				}
-				if(!coupValide){
-					JOptionPane.showMessageDialog(null, "Erreur lors du chargement de l'historique des coups.\nRaison : "+coup.toString()+" : aucune reine ne correspond au coup.", "Erreur lors du chargement de l'historique des coups", JOptionPane.ERROR_MESSAGE);
-					this.reset();
-					return false;
-				}
-			}else if(coup.nomPiece == CoupPGN.ROI){
-				Roi p = (joueurCourant.getCouleur().equals("BLANC"))? plateau.getRoiB() : plateau.getRoiN();
-				boolean coupValide = false;
-				if(p.mouvementPossible(coup.arrivee.x, coup.arrivee.y) && p.coupPossible(coup.arrivee.x, coup.arrivee.y)){
-					if(coup.depart.x != -1 && coup.depart.y != -1 && coup.depart.x == p.getX() && coup.depart.y == p.getY()
-							|| coup.depart.x != -1 && coup.depart.x == p.getX()
-							|| coup.depart.y != -1 && coup.depart.y == p.getY()
-							|| coup.depart.x == -1 && coup.depart.y == -1){
-						coup.departMemoire.set(p.getX(), p.getY());
-						plateau.setCase(coup.arrivee.x, coup.arrivee.y, p);
-						plateau.setCase(p.getX(), p.getY(), null);
-						p.setX(coup.arrivee.x);
-						p.setY(coup.arrivee.y);
-						coupValide = true;
-					}
-				}
-				if(!coupValide){
-					JOptionPane.showMessageDialog(null, "Erreur lors du chargement de l'historique des coups.\nRaison : "+coup.toString()+" : le roi ne peut pas faire se deplacement.", "Erreur lors du chargement de l'historique des coups", JOptionPane.ERROR_MESSAGE);
 					this.reset();
 					return false;
 				}
@@ -686,70 +524,6 @@ public class Jeu{
 		if(p.getClass().equals(Pion.class)){
 			ArrayList<Pion> pions = plateau.getPions(p.getCouleur());
 			for(Pion a : pions){
-				if(a != p){
-					if(a.coupPossible(x, y) && a.mouvementPossible(x, y)){
-						if(a.getX() == p.getX()){
-							valeur += 10;
-						}
-						if(a.getY() == p.getY()){
-							valeur  += 100;
-						}else{
-							if(valeur %100 < 90) valeur += 10;
-						}
-					}
-				}
-			}
-		}else if(p.getClass().equals(Tour.class)){
-			ArrayList<Tour> tours = plateau.getTours(p.getCouleur());
-			for(Tour a : tours){
-				if(a != p){
-					if(a.coupPossible(x, y) && a.mouvementPossible(x, y)){
-						if(a.getX() == p.getX()){
-							valeur += 10;
-						}
-						if(a.getY() == p.getY()){
-							valeur  += 100;
-						}else{
-							if(valeur %100 < 90) valeur += 10;
-						}
-					}
-				}
-			}
-		}else if(p.getClass().equals(Cavalier.class)){
-			ArrayList<Cavalier> cavaliers = plateau.getCavaliers(p.getCouleur());
-			for(Cavalier a : cavaliers){
-				if(a != p){
-					if(a.coupPossible(x, y) && a.mouvementPossible(x, y)){
-						if(a.getX() == p.getX()){
-							valeur += 10;
-						}
-						if(a.getY() == p.getY()){
-							valeur  += 100;
-						}else{
-							if(valeur%100 < 90) valeur += 10;
-						}
-					}
-				}
-			}
-		}else if(p.getClass().equals(Fou.class)){
-			ArrayList<Fou> fous = plateau.getFous(p.getCouleur());
-			for(Fou a : fous){
-				if(a != p){
-					if(a.coupPossible(x, y) && a.mouvementPossible(x, y)){
-						if(a.getX() == p.getX()){
-							valeur += 10;
-						}
-						if(a.getY() == p.getY()){
-							valeur  += 100;
-						}else{
-							if(valeur %100 < 90) valeur += 10;
-						}
-					}
-				}
-			}
-		}else if(p.getClass().equals(Reine.class)){
-			ArrayList<Reine> reines = plateau.getReines(p.getCouleur());
-			for(Reine a : reines){
 				if(a != p){
 					if(a.coupPossible(x, y) && a.mouvementPossible(x, y)){
 						if(a.getX() == p.getX()){

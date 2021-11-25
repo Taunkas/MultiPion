@@ -23,7 +23,7 @@ public class PlateauReplay extends Plateau{
 	public PlateauReplay(Replay replay){
 		plateau = new Piece[8][8];
 		this.replay = replay;
-		this.setRois();
+		//this.setRois();
 	}
 	
 	/**
@@ -58,16 +58,16 @@ public class PlateauReplay extends Plateau{
         	return;
     	}else if(coup.isGrandRoque){
     		int rangee = (replay.getJoueurCourant().getCouleur().equals("BLANC"))? 7 : 0;
-    		Roi roi = (Roi) plateau[2][rangee];
-    		Tour tour = (Tour) plateau[3][rangee];
-    		roi.setPremierCoup(true);
-    		tour.setPremierCoup(true);
-    		roi.setX(4);
-    		tour.setX(0);
+    		//Roi roi = (Roi) plateau[2][rangee];
+    		//Tour tour = (Tour) plateau[3][rangee];
+    		//roi.setPremierCoup(true);
+    		//tour.setPremierCoup(true);
+    		//roi.setX(4);
+    		//tour.setX(0);
     		plateau[2][rangee] = null;
     		plateau[3][rangee] = null;
-    		plateau[4][rangee] = roi;
-    		plateau[0][rangee] = tour;
+    		//plateau[4][rangee] = roi;
+    		//plateau[0][rangee] = tour;
     		if(changerDeJoueur){
         		replay.switchJoueur();
         	}

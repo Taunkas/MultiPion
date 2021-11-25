@@ -50,7 +50,7 @@ public class Plateau {
 	 */
 	public Plateau(){
 		plateau = new Piece[8][8];
-		this.setRois();
+		//this.setRois();
 	}
 	
 	/**
@@ -64,7 +64,7 @@ public class Plateau {
 			}
 		}
 		
-		setCase(0, 0, new Tour(0, 0, "BLANC", this));
+		/*setCase(0, 0, new Tour(0, 0, "BLANC", this));
 		setCase(1, 0, new Cavalier(1, 0, "BLANC", this));
 		setCase(2, 0, new Fou(2, 0, "BLANC", this));
 		setCase(3, 0, new Reine(3, 0, "BLANC", this));
@@ -72,13 +72,17 @@ public class Plateau {
 		setCase(5, 0, new Fou(5, 0, "BLANC", this));
 		setCase(6, 0, new Cavalier(6, 0,"BLANC", this));
 		setCase(7, 0, new Tour(7, 0,"BLANC", this));
-		
+		*/
 		for(char i = 0; i <= 7; i++){
 			setCase(i, 1, new Pion(i, 1,"BLANC", this));
 				setCase(i, 6, new Pion(i, 6,"NOIR", this));
 		}
+		for(char i = 0; i <= 7; i++){
+			setCase(i, 0, new Pion(i, 1,"BLANC", this));
+				setCase(i, 7, new Pion(i, 6,"NOIR", this));
+		}
 		
-			setCase(0, 7, new Tour(0, 7, "NOIR", this));
+			/*setCase(0, 7, new Tour(0, 7, "NOIR", this));
 			setCase(1, 7, new Cavalier(1, 7, "NOIR", this));
 			setCase(2, 7, new Fou(2, 7, "NOIR", this));
 			setCase(3, 7, new Reine(3, 7, "NOIR", this));
@@ -86,7 +90,7 @@ public class Plateau {
 			setCase(5, 7, new Fou(5, 7, "NOIR", this));
 			setCase(6, 7, new Cavalier(6, 7, "NOIR", this));
 			setCase(7, 7, new Tour(7, 7,"NOIR", this));
-		setRoi(getCase(4, 7), getCase(4, 0));		
+		setRoi(getCase(4, 7), getCase(4, 0));	*/	
 	}
 	
 	/**
@@ -145,58 +149,6 @@ public class Plateau {
      */
     public Jeu getJeu(){
     	return jeu;
-    }
-    
-    /**
-     * Recupere les references des rois et les places dans les variables de class
-     * @param roiNoir le roi noir
-     * @param roiBlanc le roi blanc
-     */
-    public void setRoi(Piece roiNoir, Piece roiBlanc){
-    	this.roi_blanc = (Roi) roiBlanc;
-    	this.roi_noir = (Roi) roiNoir;
-    }
-    
-    /**
-     * Place les references des 2 rois, s'ils existent, dans leur variables de class
-     */
-    public void setRois(){
-    	for(int i = 0; i < this.plateau.length; i++){
-    		for(int j = 0; j < this.plateau[i].length; j++){
-    			if(this.plateau[i][j] != null && this.plateau[i][j].getClass() == Roi.class){
-    				if(this.plateau[i][j].getCouleur().equals("NOIR")){
-    					this.roi_noir = (Roi)this.plateau[i][j];
-    				}else if(this.plateau[i][j].getCouleur().equals("BLANC")){
-    					this.roi_blanc = (Roi)this.plateau[i][j];
-    				}
-    			}
-    		}
-    	}
-    }
-    
-    /**
-     * Getter roi blanc
-     * @return roi blanc
-     */
-    public Roi getRoiB(){
-    	return this.roi_blanc;
-    }
-    
-    /**
-     * Getter roi noir
-     * @return roi noir
-     */
-    public Roi getRoiN(){
-    	return this.roi_noir;
-    }
-    
-    /**
-     * Getter du roi selon la couleur
-     * @param couleur couleur du roi
-     * @return roi de la couleur choisi
-     */
-    public Roi getRoi(String couleur){
-    	return (couleur.equals("BLANC"))? this.roi_blanc : this.roi_noir;
     }
     
     /**
@@ -268,16 +220,9 @@ public class Plateau {
     		}else{
     			rangee = (jeu.getJoueurCourant().getCouleur().equals("BLANC"))? 7 : 0;
     		}
-    		Roi roi = (Roi) plateau[6][rangee];
-    		Tour tour = (Tour) plateau[5][rangee];
-    		roi.setPremierCoup(true);
-    		tour.setPremierCoup(true);
-    		roi.setX(4);
-    		tour.setX(7);
     		plateau[6][rangee] = null;
     		plateau[5][rangee] = null;
-    		plateau[4][rangee] = roi;
-    		plateau[7][rangee] = tour;
+
     		if(changerDeJoueur){
         		jeu.switchJoueur();
         	}
@@ -293,16 +238,8 @@ public class Plateau {
     		}else{
     			rangee = (jeu.getJoueurCourant().getCouleur().equals("BLANC"))? 7 : 0;
     		}
-    		Roi roi = (Roi) plateau[2][rangee];
-    		Tour tour = (Tour) plateau[3][rangee];
-    		roi.setPremierCoup(true);
-    		tour.setPremierCoup(true);
-    		roi.setX(4);
-    		tour.setX(0);
     		plateau[2][rangee] = null;
     		plateau[3][rangee] = null;
-    		plateau[4][rangee] = roi;
-    		plateau[0][rangee] = tour;
     		if(changerDeJoueur){
         		jeu.switchJoueur();
         	}
@@ -397,86 +334,6 @@ public class Plateau {
     	return pions;
     }
     
-    /**
-     * Getter des tours de la couleur choisi
-     * @param couleur couleur des pions
-     * @return
-     */
-    public ArrayList<Tour> getTours(String couleur){
-    	ArrayList<Piece> pieces = (couleur.equals("BLANC"))? this.getPiecesBlanches() : this.getPiecesNoires();
-    	
-    	ArrayList<Tour> pions = new ArrayList<Tour>();
-    	
-    	for(int i = 0; i < pieces.size(); i++){
-    		if(pieces.get(i).getClass().equals(Tour.class)){
-    			Tour p = (Tour)pieces.get(i);
-    			pions.add(p);
-    		}
-    	}
-    	
-    	return pions;
-    }
-    
-    /**
-     * Getter des cavaliers de la couleur choisi
-     * @param couleur des cavaliers
-     * @return
-     */
-    public ArrayList<Cavalier> getCavaliers(String couleur){
-    	ArrayList<Piece> pieces = (couleur.equals("BLANC"))? this.getPiecesBlanches() : this.getPiecesNoires();
-    	
-    	ArrayList<Cavalier> cavaliers = new ArrayList<Cavalier>();
-    	
-    	for(int i = 0; i < pieces.size(); i++){
-    		if(pieces.get(i).getClass().equals(Cavalier.class)){
-    			Cavalier p = (Cavalier)pieces.get(i);
-    			cavaliers.add(p);
-    		}
-    	}
-    	
-    	return cavaliers;
-    }
-    
-    
-    /**
-     * Getter des fous de la couleur choisi
-     * @param couleur couleur des fous
-     * @return
-     */
-    public ArrayList<Fou> getFous(String couleur){
-    	ArrayList<Piece> pieces = (couleur.equals("BLANC"))? this.getPiecesBlanches() : this.getPiecesNoires();
-    	
-    	ArrayList<Fou> pions = new ArrayList<Fou>();
-    	
-    	for(int i = 0; i < pieces.size(); i++){
-    		if(pieces.get(i).getClass().equals(Fou.class)){
-    			Fou p = (Fou)pieces.get(i);
-    			pions.add(p);
-    		}
-    	}
-    	
-    	return pions;
-    }
-    
-    /**
-     * Getetr des reines de la couleur choisi
-     * @param couleur couleur des reines
-     * @return
-     */
-    public ArrayList<Reine> getReines(String couleur){
-    	ArrayList<Piece> pieces = (couleur.equals("BLANC"))? this.getPiecesBlanches() : this.getPiecesNoires();
-    	
-    	ArrayList<Reine> pions = new ArrayList<Reine>();
-    	
-    	for(int i = 0; i < pieces.size(); i++){
-    		if(pieces.get(i).getClass().equals(Reine.class)){
-    			Reine p = (Reine)pieces.get(i);
-    			pions.add(p);
-    		}
-    	}
-    	
-    	return pions;
-    }
     
     /**
      * Affichage en String du plateau

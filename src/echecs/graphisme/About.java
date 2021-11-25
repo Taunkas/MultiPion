@@ -37,13 +37,11 @@ public class About extends JDialog {
 	 */
 	public void initFenetre(){
 		String text = "<html>" +
-				"<h1>Jeu d'Echecs</h1>" +
+				"<h1>Jeu MultiPions</h1>" +
 				"<br /><i>par<br /> " +
-				"</i>Cedric DESGRANGES <br />" +
-				" Arthur DIAN <br />" +
-				" Julien DUARTE <br />" +
-				" Thomas HAUTIER <br /><br /><br />" +
-				"<i>IK3 - 2013-2014</i>" +
+				"</i>David RIGAUX <br />" +
+				" Etienne GOULPEAU <br /><br /><br />" +
+				"<i>M1 - 2021-2022</i>" +
 				"</html> ";
 
 		JLabel credit = new JLabel(text);

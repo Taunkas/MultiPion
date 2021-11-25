@@ -180,13 +180,6 @@ public class JeuClient extends Jeu{
 		
 		coup.setPrerequis(this.recherchePrerequis(pieceSelectionee, x, y));
 		
-		if(pieceSelectionee.getFamille().equals("ROI") && Math.abs(pieceSelectionee.getX() - x) > 1){
-			if(x > pieceSelectionee.getX()){
-				coup.isPetitRoque = true;
-			}else{
-				coup.isGrandRoque = true;
-			}
-		}
 		
 		if(pieceSelectionee.getFamille().equals("PION")){
 			if((pieceSelectionee.getCouleur().equals("BLANC") && y == 7 && pieceSelectionee.getY()+1 == y && 
@@ -198,15 +191,6 @@ public class JeuClient extends Jeu{
 				coup.isTransformation = true;
 				String reponse = "";
 				reponse = fenetre.showTransformations();
-				if(reponse.equals("Reine")){
-					coup.nomPieceTransformation = CoupPGN.REINE;
-				}else if(reponse.equals("Tour")){
-					coup.nomPieceTransformation = CoupPGN.TOUR;
-				}else if(reponse.equals("Fou")){
-					coup.nomPieceTransformation = CoupPGN.FOU;
-				}else if(reponse.equals("Cavalier")){
-					coup.nomPieceTransformation = CoupPGN.CAVALIER;
-				}
 			}
 		}
 		
@@ -223,16 +207,6 @@ public class JeuClient extends Jeu{
 	 */
 	public void jouerCoup(){
 		Piece pieceAJouer = plateau.getCase(coupCourant.departMemoire.x, coupCourant.departMemoire.y);
-		
-		if(coupCourant.isPetitRoque){
-			String couleurJoueurCourant = joueurCourant.getCouleur();
-			coupCourant.arrivee.x = plateau.getRoi(couleurJoueurCourant).getX() +2;
-			coupCourant.arrivee.y = plateau.getRoi(couleurJoueurCourant).getY();
-		}else if(coupCourant.isGrandRoque){
-			String couleurJoueurCourant = joueurCourant.getCouleur();
-			coupCourant.arrivee.x = plateau.getRoi(couleurJoueurCourant).getX() -2;
-			coupCourant.arrivee.y = plateau.getRoi(couleurJoueurCourant).getY();
-		}
 		
 		if(pieceAJouer.deplacer(coupCourant.arrivee.x, coupCourant.arrivee.y)){
 			if(coupCourant.isTransformation && coupCourant.nomPieceTransformation != CoupPGN.REINE){

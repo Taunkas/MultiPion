@@ -105,7 +105,7 @@ public class Menu extends JFrame implements ActionListener, MouseListener{
 	 * Constructeur
 	 */
 	public Menu(){
-		super("Jeu d'echecs");
+		super("Jeu MultiPion");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setSize(Case.CASE_LENGTH * 9, Case.CASE_LENGTH * 9);
 		this.setResizable(false);

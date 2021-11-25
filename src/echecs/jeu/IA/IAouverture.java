@@ -181,7 +181,7 @@ public class IAouverture extends Joueur implements IA{
 					}
 				}
 			}
-		}else if(coup.nomPiece == CoupPGN.TOUR){
+		}/*else if(coup.nomPiece == CoupPGN.TOUR){
 			ArrayList<Tour> pions = plateau.getTours(joueurCourant.getCouleur());
 			for(Tour p: pions){
 				if((plateau.getCase(coup.arrivee.x, coup.arrivee.y) == null || !plateau.getCase(coup.arrivee.x, coup.arrivee.y).getCouleur().equals(p.getCouleur())) 
@@ -253,7 +253,7 @@ public class IAouverture extends Joueur implements IA{
 					coup.departMemoire.set(p.getX(), p.getY());
 				}
 			}
-		}
+		}*/
 	}
 	
 	/**

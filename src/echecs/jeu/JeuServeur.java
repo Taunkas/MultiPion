@@ -82,20 +82,20 @@ public class JeuServeur extends Jeu{
 	 * @param coup coup a jouer
 	 */
 	public void jouerCoup(CoupPGN coup){
-		Roi[] rois = new Roi[2];
+		/*Roi[] rois = new Roi[2];
 		rois[0] = plateau.getRoiB();
-		rois[1] = plateau.getRoiN();
+		rois[1] = plateau.getRoiN();*/
 		
 		String couleurJoueurCourant = joueurCourant.getCouleur();
 		String couleurJoueurAdverse = couleurJoueurCourant.equals("BLANC")? "NOIR" : "BLANC";
 		
-		if(coup.isPetitRoque){
+		/*if(coup.isPetitRoque){
 			coup.arrivee.x = plateau.getRoi(couleurJoueurCourant).getX() +2;
 			coup.arrivee.y = plateau.getRoi(couleurJoueurCourant).getY();
 		}else if(coup.isGrandRoque){
 			coup.arrivee.x = plateau.getRoi(couleurJoueurCourant).getX() -2;
 			coup.arrivee.y = plateau.getRoi(couleurJoueurCourant).getY();
-		}
+		}*/
 		
 		if(pieceSelectionee.deplacer(coup.arrivee.x, coup.arrivee.y)){
 			if(coup.isTransformation && coup.nomPieceTransformation != CoupPGN.REINE){
@@ -112,7 +112,7 @@ public class JeuServeur extends Jeu{
 				}
 			}
 			boolean messageEnvoyer = false;
-			for(int i = 0; i < rois.length; i++){
+			/*for(int i = 0; i < rois.length; i++){
 				//si le roi est en echec
 				if(rois[i].estEchec()){
 					if(joueurCourant.getCouleur().equals(rois[i].getCouleur())){
@@ -143,7 +143,7 @@ public class JeuServeur extends Jeu{
 						return;
 					}
 				}
-			}
+			}*/
 			
 			if(!messageEnvoyer){
 				String envoyer = "a:True";

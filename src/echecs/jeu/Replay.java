@@ -268,10 +268,10 @@ public class Replay{
 				this.reset();
 				return;
 			}
-		}else if(coup.nomPiece == CoupPGN.TOUR){
-			ArrayList<Tour> pions = plateau.getTours(joueurCourant.getCouleur());
+		}/*else if(coup.nomPiece == CoupPGN.TOUR){
+			//ArrayList<Tour> pions = plateau.getTours(joueurCourant.getCouleur());
 			boolean coupValide = false;
-			for(Tour p: pions){
+			/*for(Tour p: pions){
 				if((plateau.getCase(coup.arrivee.x, coup.arrivee.y) == null || !plateau.getCase(coup.arrivee.x, coup.arrivee.y).getCouleur().equals(p.getCouleur())) 
 						&& p.mouvementPossible(coup.arrivee.x, coup.arrivee.y) 
 						&& p.coupPossible(coup.arrivee.x, coup.arrivee.y)){
@@ -289,8 +289,8 @@ public class Replay{
 						break;
 					}
 				}
-			}
-			if(!coupValide){
+			}*/
+			/*if(!coupValide){
 				JOptionPane.showMessageDialog(null, "Erreur du coup\nAucune tour ne correspond au coup\nCoup : "+coup.toString(), "Erreur du coup", JOptionPane.ERROR_MESSAGE);
 				this.reset();
 				return;
@@ -400,7 +400,7 @@ public class Replay{
 				this.reset();
 				return;
 			}
-		}
+		}*/
 		testSuivantPrecedent();
 		fenetre.getGrille().resetEtatCases();
 		fenetre.getGrille().setCaseDernierCoup(coup.departMemoire.x, coup.departMemoire.y);

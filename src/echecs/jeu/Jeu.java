@@ -3,13 +3,8 @@ package echecs.jeu;
 import echecs.graphisme.jeu.Fenetre;
 import echecs.jeu.IA.IAThread;
 import echecs.jeu.IA.ValeursEvaluation;
-import echecs.jeu.piece.Cavalier;
-import echecs.jeu.piece.Fou;
 import echecs.jeu.piece.Piece;
 import echecs.jeu.piece.Pion;
-import echecs.jeu.piece.Reine;
-import echecs.jeu.piece.Roi;
-import echecs.jeu.piece.Tour;
 import echecs.sauvegarde.CoupPGN;
 import echecs.sauvegarde.Historique;
 import echecs.sauvegarde.Partie;
@@ -398,78 +393,6 @@ public class Jeu{
 			
 			if(coup.isPetitRoque){
 				int colonne = (joueurCourant.getCouleur().equals("BLANC"))? 0 : 7;
-				/*if(plateau.getCase(7,  colonne) == null || !(plateau.getCase(7, colonne ) instanceof Tour)){
-					JOptionPane.showMessageDialog(null, "Erreur lors du chargement de l'historique des coups.\nRaison : coup "+coup.toString()+" n'a pas la tour en position de roquer.", "Erreur lors du chargement de l'historique", JOptionPane.ERROR_MESSAGE);
-					this.reset();
-					return false;
-				}
-				Tour t = (Tour) plateau.getCase(7, colonne);
-				if(!t.getPremierCoup()){
-					JOptionPane.showMessageDialog(null, "Erreur lors du chargement de l'historique des coups.\nRaison : coup "+coup.toString()+" : la tour s'est deja deplace.", "Erreur lors du chargement de l'historique", JOptionPane.ERROR_MESSAGE);
-					this.reset();
-					return false;
-				}
-				t.setPremierCoup(false);
-				t.setX(5);
-				plateau.setCase(7, colonne, null);
-				plateau.setCase(5, colonne, t);
-				
-				if(plateau.getCase(4,  colonne) == null || !(plateau.getCase(4, colonne ) instanceof Roi)){
-					JOptionPane.showMessageDialog(null, "Erreur lors du chargement de l'historique des coups.\nRaison : coup "+coup.toString()+" n'a pas le roi en position de roquer.", "Erreur lors du chargement de l'historique", JOptionPane.ERROR_MESSAGE);
-					this.reset();
-					return false;
-				}
-				Roi r = (Roi) plateau.getCase(4, colonne);
-				if(!r.getPremierCoup()){
-					JOptionPane.showMessageDialog(null, "Erreur lors du chargement de l'historique des coups.\nRaison : coup "+coup.toString()+" : le roi s'est deja deplace.", "Erreur lors du chargement de l'historique", JOptionPane.ERROR_MESSAGE);
-					this.reset();
-					return false;
-				}
-				coup.departMemoire.x = 4;
-				coup.departMemoire.y = colonne;
-				r.setPremierCoup(false);
-				r.setX(6);
-				plateau.setCase(4, colonne, null);
-				plateau.setCase(6, colonne, r);
-				coup.arrivee.x = 6;
-				coup.arrivee.y = colonne;
-			}else if(coup.isGrandRoque){
-				int colonne = (joueurCourant.getCouleur().equals("BLANC"))? 0 : 7;
-				if(plateau.getCase(0,  colonne) == null || !(plateau.getCase(0, colonne ) instanceof Tour)){
-					JOptionPane.showMessageDialog(null, "Erreur lors du chargement de l'historique des coups.\nRaison : coup "+coup.toString()+" n'a pas la tour en position de roquer.", "Erreur lors du chargement de l'historique", JOptionPane.ERROR_MESSAGE);
-					this.reset();
-					return false;
-				}
-				Tour t = (Tour) plateau.getCase(0, colonne);
-				if(!t.getPremierCoup()){
-					JOptionPane.showMessageDialog(null, "Erreur lors du chargement de l'historique des coups.\nRaison : coup "+coup.toString()+" : la tour s'est deja deplace.", "Erreur lors du chargement de l'historique", JOptionPane.ERROR_MESSAGE);
-					this.reset();
-					return false;
-				}
-				t.setPremierCoup(false);
-				t.setX(3);
-				plateau.setCase(0, colonne, null);
-				plateau.setCase(3, colonne, t);
-				
-				if(plateau.getCase(4,  colonne) == null || !(plateau.getCase(4, colonne ) instanceof Roi)){
-					JOptionPane.showMessageDialog(null, "Erreur lors du chargement de l'historique des coups.\nRaison : coup "+coup.toString()+" n'a pas le roi en position de roquer.", "Erreur lors du chargement de l'historique", JOptionPane.ERROR_MESSAGE);
-					this.reset();
-					return false;
-				}
-				Roi r = (Roi) plateau.getCase(4, colonne);
-				if(!r.getPremierCoup()){
-					JOptionPane.showMessageDialog(null, "Erreur lors du chargement de l'historique des coups.\nRaison : coup "+coup.toString()+" : le roi s'est deja deplace.", "Erreur lors du chargement de l'historique", JOptionPane.ERROR_MESSAGE);
-					this.reset();
-					return false;
-				}
-				coup.departMemoire.x = 4;
-				coup.departMemoire.y = colonne;
-				r.setPremierCoup(false);
-				r.setX(2);
-				plateau.setCase(4, colonne, null);
-				plateau.setCase(2, colonne, r);
-				coup.arrivee.x = 2;
-				coup.arrivee.y = colonne;*/
 			}else if(coup.nomPiece == ' '){
 				ArrayList<Pion> pions = plateau.getPions(joueurCourant.getCouleur());
 				boolean coupValide = false;

@@ -54,18 +54,12 @@ public class Pion extends Piece {
     	}
     	if(this.plateau.getCase(x, y) == null){
 	    	if(this.couleur.equals("BLANC")){
-	            if(x==this.x && y == this.y+2 && premierCoup==true){
-	                return true;
-	
-	            }
+	    		//On détail les coup autorisé)
 	    		if(x==this.x && y ==this.y+1){
 	    			return true;
 	    		}
 	    	}
 	    	else{
-	            if(x==this.x && y == this.y-2 && premierCoup==true){
-	                return true;
-	            }
 	    		if(x==this.x && y==this.y-1){
 	    			return true;
 	    		}
@@ -99,7 +93,7 @@ public class Pion extends Piece {
     				}
     				if(y <= 5 && premierCoup && plateau.getCase(x, y+1) == null && plateau.getCase(x, y+2) == null){
     					coords.add(new Coordonnee(x,y+1));
-    					coords.add(new Coordonnee(x,y+2));
+    					//coords.add(new Coordonnee(x,y+2));
     				}
     				if(y < 7 && plateau.getCase(x, y+1) == null){
     					coords.add(new Coordonnee(x,y+1));
@@ -114,7 +108,7 @@ public class Pion extends Piece {
     				}
     				if(y >= 2 && premierCoup && plateau.getCase(x, y-1) == null && plateau.getCase(x, y-2) == null){
     					coords.add(new Coordonnee(x,y-1));
-    					coords.add(new Coordonnee(x,y-2));
+    					//coords.add(new Coordonnee(x,y-2));
     				}
     				if(y > 0 && plateau.getCase(x, y-1) == null){
     					coords.add(new Coordonnee(x,y-1));

@@ -22,16 +22,6 @@ public class Plateau {
 	protected Piece[][] plateau;
 	
 	/**
-	 * reference du roi blanc
-	 */
-	protected Roi roi_blanc;
-	
-	/**
-	 * reference du roi noir
-	 */
-	protected Roi roi_noir;
-	
-	/**
 	 * reference du jeu
 	 */
 	protected Jeu jeu;
@@ -64,33 +54,13 @@ public class Plateau {
 			}
 		}
 		
-		/*setCase(0, 0, new Tour(0, 0, "BLANC", this));
-		setCase(1, 0, new Cavalier(1, 0, "BLANC", this));
-		setCase(2, 0, new Fou(2, 0, "BLANC", this));
-		setCase(3, 0, new Reine(3, 0, "BLANC", this));
-		setCase(4, 0, new Roi(4, 0, "BLANC", this));
-		setCase(5, 0, new Fou(5, 0, "BLANC", this));
-		setCase(6, 0, new Cavalier(6, 0,"BLANC", this));
-		setCase(7, 0, new Tour(7, 0,"BLANC", this));
-		*/
-		for(char i = 0; i <= 7; i++){
-			setCase(i, 1, new Pion(i, 1,"BLANC", this));
-				setCase(i, 6, new Pion(i, 6,"NOIR", this));
+		for(char j = 0; j <= 1; j++){
+			for(char i = 0; i<=7; i++) {
+				setCase(i, j, new Pion(i, j,"BLANC", this));
+				setCase(i, 7-j, new Pion(i, 7-j,"NOIR", this));
+			}
 		}
-		for(char i = 0; i <= 7; i++){
-			setCase(i, 0, new Pion(i, 1,"BLANC", this));
-				setCase(i, 7, new Pion(i, 6,"NOIR", this));
-		}
-		
-			/*setCase(0, 7, new Tour(0, 7, "NOIR", this));
-			setCase(1, 7, new Cavalier(1, 7, "NOIR", this));
-			setCase(2, 7, new Fou(2, 7, "NOIR", this));
-			setCase(3, 7, new Reine(3, 7, "NOIR", this));
-			setCase(4, 7, new Roi(4, 7, "NOIR", this));
-			setCase(5, 7, new Fou(5, 7, "NOIR", this));
-			setCase(6, 7, new Cavalier(6, 7, "NOIR", this));
-			setCase(7, 7, new Tour(7, 7,"NOIR", this));
-		setRoi(getCase(4, 7), getCase(4, 0));	*/	
+			
 	}
 	
 	/**

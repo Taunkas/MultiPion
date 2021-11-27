@@ -150,7 +150,7 @@ public class Fenetre extends JFrame implements ActionListener{
 	 * @param lvlia niveau de l'ia
 	 */
 	public Fenetre(int x, int y, boolean couleur, int lvlia){
-		super("Jeu d'echecs");
+		super("Jeu Multipion");
 		jeu = new Jeu(this, couleur, lvlia);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Dimension dim = new Dimension(Case.CASE_LENGTH * 14, Case.CASE_LENGTH * 12);

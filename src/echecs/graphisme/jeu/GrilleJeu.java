@@ -49,7 +49,7 @@ public class GrilleJeu extends JComponent{
 			for(int j = 0; j < 8; j++){
 				CaseJeu c = new CaseJeu(j, i, backgroundColor, fenetre);
 				if(j != 7){
-					backgroundColor = (backgroundColor.equals(Color.GRAY))? Color.WHITE : Color.GRAY;
+					backgroundColor = (backgroundColor.equals(Color.WHITE))? Color.WHITE : Color.WHITE;
 				}
 				this.add(c);
 			}

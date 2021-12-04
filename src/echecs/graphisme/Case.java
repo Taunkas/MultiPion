@@ -88,6 +88,8 @@ public class Case extends JPanel{
 		//fond
 		g.setColor(backgroundColor);
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
+		g.setColor(Color.BLACK);
+		g.drawRect(0, 0, this.getWidth(), this.getHeight());
 		
 		if(!etat.equals(Etat.RIEN)){
 			Graphics2D g2d = (Graphics2D) g;

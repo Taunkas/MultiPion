@@ -10,12 +10,21 @@ import javax.swing.JComponent;
 import echecs.graphisme.Case;
 import echecs.graphisme.Case.Etat;
 import echecs.utils.Coordonnee;
+import echecs.graphisme.Menu;
+
+
 
 /**
  * Conteneur qui contient toutes les cases du jeu d'echecs a afficher
  * @see Case
  */
 public class GrilleJeu extends JComponent{
+	
+	/**
+	 * Taille de la grille choix de 3 à 10 
+	 */
+	
+	public static int TailleGrille=echecs.graphisme.Menu.taillegrille;
 	
 	/**
 	 * Instance de la fenetre qui contient la grille
@@ -40,17 +49,14 @@ public class GrilleJeu extends JComponent{
 	}
 	
 	/**
-	 * Ajoute les 64 Cases a la grille
+	 * Ajoute les Cases a la grille
 	 */
 	private void initGrille(){
-		this.setLayout(new GridLayout(8,8));
+		this.setLayout(new GridLayout(TailleGrille,TailleGrille));
 		Color backgroundColor = Color.WHITE;
-		for(int i = 7; i >= 0; i--){
-			for(int j = 0; j < 8; j++){
+		for(int i = TailleGrille-1; i >= 0; i--){
+			for(int j = 0; j < TailleGrille; j++){
 				CaseJeu c = new CaseJeu(j, i, backgroundColor, fenetre);
-				if(j != 7){
-					backgroundColor = (backgroundColor.equals(Color.GRAY))? Color.WHITE : Color.GRAY;
-				}
 				this.add(c);
 			}
 		}

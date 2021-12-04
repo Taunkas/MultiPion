@@ -21,6 +21,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import echecs.Echecs;
 import echecs.graphisme.replay.ReplayFenetre;
@@ -67,6 +68,11 @@ public class Menu extends JFrame implements ActionListener, MouseListener{
 	private JButton iavsia;
 	
 	/**
+	 * Textfield taille grille
+	 */
+	private JTextField dimgrille;
+	
+	/**
 	 * Reference du content panel de la fenetre
 	 */
 	private JPanel conteneur;
@@ -100,6 +106,12 @@ public class Menu extends JFrame implements ActionListener, MouseListener{
 	 * Image 6
 	 */
 	private RandomPiece image6;
+	
+	/**
+	 * Taille de la grille
+	 */
+	public static int taillegrille;
+	
 	
 	/**
 	 * Constructeur
@@ -141,6 +153,8 @@ public class Menu extends JFrame implements ActionListener, MouseListener{
 		replay.setPreferredSize(taille);
 		replay.addMouseListener(this);
 		replay.addActionListener(this);
+		dimgrille = new JTextField("");
+		dimgrille.setPreferredSize(taille);
 		iavsia = new JButton("IA vs IA");
 		iavsia.setPreferredSize(taille);
 		iavsia.addMouseListener(this);
@@ -166,7 +180,7 @@ public class Menu extends JFrame implements ActionListener, MouseListener{
 		this.setContentPane(conteneur);
 		
 		//Label
-		JLabel titre = new JLabel("ECHECS");
+		JLabel titre = new JLabel("JEU MULTIPION");
 		titre.setFont(new Font("Dialog", Font.BOLD,50));
 		titre.setHorizontalAlignment(JLabel.CENTER);
 		
@@ -239,11 +253,12 @@ public class Menu extends JFrame implements ActionListener, MouseListener{
 		gbc.gridwidth = 1;
 		conteneur.add(iavsia, gbc);
 		
+///////////  je prend l'endroit du replay pour mettre le JTextfield (provisor)/////////////
 		//positionnement replay
 		gbc.gridx = 1;
 		gbc.gridy = 3;
 		gbc.gridwidth = 2;
-		conteneur.add(replay, gbc);
+		conteneur.add(dimgrille, gbc);
 		
 		//positionnement a propos
 		gbc.gridx = 0;
@@ -266,7 +281,10 @@ public class Menu extends JFrame implements ActionListener, MouseListener{
 			new EcranSelection(this.getX() + this.getWidth()/2, this.getY() + this.getHeight()/2, this);
 		}
 		if(source == deuxJoueurs){
+///// CONDITION A METTRE SUR LE CHOIX DE LA TAILLE ///////////////////////////////////////////////////////////			
+			taillegrille=Integer.parseInt(dimgrille.getText());			
 			new SelectionMode(this.getX() + this.getWidth()/2, this.getY() + this.getHeight()/2, this);
+			
 		}
 		if(source == aPropos){
 			new About();
@@ -348,9 +366,9 @@ public class Menu extends JFrame implements ActionListener, MouseListener{
 class RandomPiece extends JPanel{
 	
 	/**
-	 * Tableau des familles de piece pour le tirage au sort
+	 * Affichage piece
 	 */
-	private String[] pieces = {"pion", "tour", "cavalier", "fou", "reine", "roi"};
+	private String[] pieces = {"pion" };
 	
 	/**
 	 * Couleur de la piece

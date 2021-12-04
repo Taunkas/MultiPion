@@ -10,7 +10,7 @@ import echecs.jeu.piece.Reine;
 import echecs.jeu.piece.Roi;
 import echecs.jeu.piece.Tour;
 import echecs.sauvegarde.CoupPGN;
-
+import echecs.graphisme.jeu.GrilleJeu;
 /**
  * Classe qui va creer le plateau du jeu, elle est compose d'un tableau de Pieces 
  */
@@ -20,6 +20,11 @@ public class Plateau {
 	 *  Un tableau de pieces.
 	 */
 	protected Piece[][] plateau;
+	
+	/**	
+	 *  récupère la taille de la grille
+	 */
+	public int tailleplateau=echecs.graphisme.jeu.GrilleJeu.TailleGrille;
 	
 	/**
 	 * reference du jeu
@@ -39,7 +44,7 @@ public class Plateau {
 	 * Constructeur
 	 */
 	public Plateau(){
-		plateau = new Piece[8][8];
+		plateau = new Piece[tailleplateau][tailleplateau];
 		//this.setRois();
 	}
 	
@@ -54,11 +59,11 @@ public class Plateau {
 			}
 		}
 		
-		for(char j = 0; j <= 1; j++){
-			for(char i = 0; i<=7; i++) {
-				setCase(i, j, new Pion(i, j,"BLANC", this));
-				setCase(i, 7-j, new Pion(i, 7-j,"NOIR", this));
-			}
+		
+		for(char i = 0; i<=tailleplateau-1; i++) {
+			setCase(i, 0, new Pion(i, 0,"BLANC", this));
+			setCase(i, tailleplateau-1, new Pion(i, tailleplateau-1,"NOIR", this));
+			
 		}
 			
 	}
@@ -70,11 +75,11 @@ public class Plateau {
 	 * @return soit la Piece contenu dans la case x,y; soit une erreur dut aux coordonnees.
 	 */
 	public Piece getCase(int x, int y){
-		if (x < 0 || y > 7){
+		if (x < 0 || y > tailleplateau-1){
 			System.out.println("Erreur dans la coordonnee sur l'axe des abscisse : ("+x+","+y+")");
 			return null;
 		}
-		if (y>7 || y<0){
+		if (y>tailleplateau-1 || y<0){
 			System.out.println("Erreur dans la coordonnee sur l'axe des ordonnees : ("+x+","+y+")");
 			return null;
 		}
@@ -88,10 +93,10 @@ public class Plateau {
 	 * @param a est la Piece a mettre dans la case d'abscisse x et d'ordonnee y.
 	 */
 	public void setCase(int x, int y, Piece a){
-		if (x < 0 || x > 7){
+		if (x < 0 || x > tailleplateau-1){
 			System.out.println("Erreur dans la coordonnee sur l'axe des abscisse : ("+x+","+y+")"+" : "+a.toString());
 		}
-		if (y>7 || y<0){
+		if (y>tailleplateau-1 || y<0){
 			System.out.println("Erreur dans la coordonnee sur l'axe des ordonnees : ("+x+","+y+") : "+a.toString());
 		}
 		this.plateau[x][y]=a;
@@ -186,9 +191,9 @@ public class Plateau {
     		if(jeu.getJoueurCourant().getCouleur().equals("BLANC") && jeu.getHistorique().getList().size()%2 == 1){
     			rangee = 0;
     		}else if(jeu.getJoueurCourant().getCouleur().equals("NOIR") && jeu.getHistorique().getList().size()%2 == 0){
-    			rangee = 7;
+    			rangee = tailleplateau-1;
     		}else{
-    			rangee = (jeu.getJoueurCourant().getCouleur().equals("BLANC"))? 7 : 0;
+    			rangee = (jeu.getJoueurCourant().getCouleur().equals("BLANC"))? tailleplateau-1 : 0;
     		}
     		plateau[6][rangee] = null;
     		plateau[5][rangee] = null;
@@ -204,9 +209,9 @@ public class Plateau {
     		if(jeu.getJoueurCourant().getCouleur().equals("BLANC") && jeu.getHistorique().getList().size()%2 == 1){
     			rangee = 0;
     		}else if(jeu.getJoueurCourant().getCouleur().equals("NOIR") && jeu.getHistorique().getList().size()%2 == 0){
-    			rangee = 7;
+    			rangee = tailleplateau-1;
     		}else{
-    			rangee = (jeu.getJoueurCourant().getCouleur().equals("BLANC"))? 7 : 0;
+    			rangee = (jeu.getJoueurCourant().getCouleur().equals("BLANC"))? tailleplateau-1 : 0;
     		}
     		plateau[2][rangee] = null;
     		plateau[3][rangee] = null;
@@ -220,7 +225,7 @@ public class Plateau {
     		Pion p = new Pion(coup.arrivee.x, coup.arrivee.y, pieceDuCoup.getCouleur(), this);
     		p.setPremierCoup(false);
     		pieceDuCoup = p;
-    	}else if(coup.nomPiece == CoupPGN.ROI && coup.departMemoire.x == 4 && (coup.departMemoire.y == 0 && pieceDuCoup.getCouleur().equals("BLANC") || coup.departMemoire.y == 7 && pieceDuCoup.getCouleur().equals("NOIR"))){
+    	}else if(coup.nomPiece == CoupPGN.ROI && coup.departMemoire.x == 4 && (coup.departMemoire.y == 0 && pieceDuCoup.getCouleur().equals("BLANC") || coup.departMemoire.y == tailleplateau-1 && pieceDuCoup.getCouleur().equals("NOIR"))){
     		boolean premierCoup = true;
     		for(int i = jeu.getHistorique().getList().size()-3; i >= 0; i-=2){
     			if(jeu.getHistorique().getList().get(i).nomPiece == CoupPGN.ROI){
@@ -232,7 +237,7 @@ public class Plateau {
     			roiDuCoup.setPremierCoup(true);
     		}
     	}else if(coup.nomPiece == CoupPGN.TOUR && 
-    			(coup.departMemoire.x == 0 && (coup.departMemoire.y == 0 && pieceDuCoup.getCouleur().equals("BLANC") || coup.departMemoire.y == 7 && pieceDuCoup.getCouleur().equals("NOIR")))){
+    			(coup.departMemoire.x == 0 && (coup.departMemoire.y == 0 && pieceDuCoup.getCouleur().equals("BLANC") || coup.departMemoire.y == tailleplateau-1 && pieceDuCoup.getCouleur().equals("NOIR")))){
     		Tour tourDuCoup = (Tour) pieceDuCoup;
     		boolean premierCoup = true;
     		for(int i = jeu.getHistorique().getList().size()-3; i >= 0; i-=2){
@@ -248,7 +253,7 @@ public class Plateau {
     			tourDuCoup.setPremierCoup(true);
     		}
     	}else if(coup.nomPiece == CoupPGN.TOUR &&
-    			(coup.departMemoire.x == 7 && (coup.departMemoire.y == 0 && pieceDuCoup.getCouleur().equals("BLANC") || coup.departMemoire.y == 7 && pieceDuCoup.getCouleur().equals("NOIR")))){
+    			(coup.departMemoire.x == tailleplateau-1 && (coup.departMemoire.y == 0 && pieceDuCoup.getCouleur().equals("BLANC") || coup.departMemoire.y == tailleplateau-1 && pieceDuCoup.getCouleur().equals("NOIR")))){
     		Tour tourDuCoup = (Tour) pieceDuCoup;
     		boolean premierCoup = true;
     		for(int i = jeu.getHistorique().getList().size()-3; i >= 0; i-=2){

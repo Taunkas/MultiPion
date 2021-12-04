@@ -31,6 +31,7 @@ import echecs.jeu.JeuClient;
 import echecs.reseau.client.JoueurClient;
 import echecs.jeu.IA.ValeursEvaluation;
 import echecs.sauvegarde.Partie;
+import echecs.graphisme.Menu;
 
 public class Fenetre extends JFrame implements ActionListener{
 	
@@ -123,6 +124,16 @@ public class Fenetre extends JFrame implements ActionListener{
 	 * Label du champs de text du chat
 	 */
 	private JLabel chat_text;
+	
+	/**
+	 * Taille de la grille choix de 3 à 10 
+	 */	
+	public static int taillegrille=echecs.graphisme.Menu.taillegrille;
+	
+	/**
+	 * Lettre de A à J  
+	 */	
+	public char lettre='A';
 
 	/**
 	 * Constructeur
@@ -323,15 +334,34 @@ public class Fenetre extends JFrame implements ActionListener{
 		
 		//Coords
 		coordAbscisse = new JPanel();
-		coordAbscisse.setLayout(new GridLayout(1, 8));
-		for(char i = 'A'; i <= 'H'; i++){
+		coordAbscisse.setLayout(new GridLayout(1, taillegrille));
+		
+		if(taillegrille==3) {
+			lettre='C';
+		} else if(taillegrille==4) {
+			lettre='D';
+		} else if(taillegrille==5) {
+			lettre='E';
+		} else if(taillegrille==6) {
+			lettre='F';
+		} else if(taillegrille==7) {
+			lettre='G';
+		} else if(taillegrille==8) {
+			lettre='H';
+		} else if(taillegrille==9) {
+			lettre='I';
+		} else if(taillegrille==10) {
+			lettre='J';
+		} 
+	
+		for(char i = 'A'; i <= lettre; i++){
 			JLabel c = new JLabel(i+"", JLabel.CENTER);
 			c.setPreferredSize(new Dimension(Case.CASE_LENGTH, 10));
 			coordAbscisse.add(c);
 		}
 		coordOrdonnee = new JPanel();
-		coordOrdonnee.setLayout(new GridLayout(8, 1));
-		for(int i = 8; i >= 1; i--){
+		coordOrdonnee.setLayout(new GridLayout(taillegrille, 1));
+		for(int i = taillegrille; i >= 1; i--){
 			JLabel c = new JLabel(i+"");
 			c.setPreferredSize(new Dimension(10, Case.CASE_LENGTH));
 			coordOrdonnee.add(c);
@@ -514,7 +544,7 @@ public class Fenetre extends JFrame implements ActionListener{
 	 */
 	public String showTransformations(){
 		String[] pieces = {"Tour", "Cavalier", "Fou", "Reine"};
-		return (String)JOptionPane.showInputDialog(null, "Quel piece pour la promotion ?", "Promotion du pion", JOptionPane.QUESTION_MESSAGE, null, pieces, pieces[0]);
+		return (String)JOptionPane.showInputDialog(null, "TEST FIN DE JEUf", "Promotion du pion", JOptionPane.QUESTION_MESSAGE, null, pieces, pieces[0]);
 	}
 	
 	/**

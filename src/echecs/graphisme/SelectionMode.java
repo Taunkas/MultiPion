@@ -44,11 +44,11 @@ public class SelectionMode extends JFrame implements ActionListener{
 		this.setResizable(false);
 		bnormal = new JButton("Mode Normal");
 		bnormal.addActionListener(this);
-		bblitz = new JButton("Mode Blitz");
-		bblitz.addActionListener(this);
+		//bblitz = new JButton("Mode Blitz");
+		//bblitz.addActionListener(this);
 		this.setContentPane(pan);
 		pan.add(bnormal);
-		pan.add(bblitz);
+		//pan.add(bblitz);
 		this.setLocation(x - this.getWidth()/2, y - this.getHeight()/2);
 		this.setVisible(true);
 	}

@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import echecs.Echecs;
+import echecs.graphisme.jeu.GrilleJeu;
 import echecs.jeu.piece.Piece;
 
 /**
@@ -119,6 +120,7 @@ public class Case extends JPanel{
 			Image imgPiece = null;
 			try{
 				imgPiece = ImageIO.read(getClass().getResource(Echecs.RES_PATH+famille.toLowerCase()+"_"+couleurFile+".png"));
+				imgPiece = imgPiece.getScaledInstance(500/GrilleJeu.TailleGrille, 500/GrilleJeu.TailleGrille, Image.SCALE_DEFAULT);
 				g.drawImage(imgPiece, 0, 0, this);
 			}catch(IOException e){
 				System.out.println("Impossible de charger l'image "+getClass().getResource(Echecs.RES_PATH+famille.toLowerCase()+"_"+couleurFile+".png"));

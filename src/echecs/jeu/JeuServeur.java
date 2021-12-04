@@ -100,16 +100,6 @@ public class JeuServeur extends Jeu{
 		if(pieceSelectionee.deplacer(coup.arrivee.x, coup.arrivee.y)){
 			if(coup.isTransformation && coup.nomPieceTransformation != CoupPGN.REINE){
 				Piece p = plateau.getCase(coup.arrivee.x, coup.arrivee.y);
-				if(coup.nomPieceTransformation == CoupPGN.CAVALIER){
-					Cavalier c = new Cavalier(p.getX(), p.getY(), p.getCouleur(), plateau);
-					plateau.setCase(c.getX(), c.getY(), c);
-				}else if(coup.nomPieceTransformation == CoupPGN.FOU){
-					Fou f = new Fou(p.getX(), p.getY(), p.getCouleur(), plateau);
-					plateau.setCase(f.getX(), f.getY(), f);
-				}else if(coup.nomPieceTransformation == CoupPGN.TOUR){
-					Tour t = new Tour(p.getX(), p.getY(), p.getCouleur(), plateau);
-					plateau.setCase(t.getX(), t.getY(), t);
-				}
 			}
 			boolean messageEnvoyer = false;
 			/*for(int i = 0; i < rois.length; i++){

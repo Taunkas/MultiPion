@@ -47,6 +47,7 @@ public class PiecesPrisesJeu extends PiecesPrises{
 				Image imgPiece = null;
 				try{
 					imgPiece = ImageIO.read(getClass().getResource(Echecs.RES_PATH+temp.getFamille().toLowerCase()+"_"+couleurFile+".png"));
+					imgPiece = imgPiece.getScaledInstance(1/GrilleJeu.TailleGrille, 1/GrilleJeu.TailleGrille, Image.SCALE_DEFAULT);
 					g.drawImage(imgPiece, x, y, this);
 					x+=Case.CASE_LENGTH;
 					if(x>=Case.CASE_LENGTH * 2){

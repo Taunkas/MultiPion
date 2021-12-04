@@ -7,7 +7,6 @@ import javax.swing.JOptionPane;
 import echecs.Echecs;
 import echecs.graphisme.Menu;
 import echecs.graphisme.jeu.Fenetre;
-import echecs.jeu.piece.Cavalier;
 import echecs.jeu.piece.Fou;
 import echecs.jeu.piece.Piece;
 import echecs.jeu.piece.Tour;
@@ -211,16 +210,6 @@ public class JeuClient extends Jeu{
 		if(pieceAJouer.deplacer(coupCourant.arrivee.x, coupCourant.arrivee.y)){
 			if(coupCourant.isTransformation && coupCourant.nomPieceTransformation != CoupPGN.REINE){
 				Piece p = plateau.getCase(coupCourant.arrivee.x, coupCourant.arrivee.y);
-				if(coupCourant.nomPieceTransformation == CoupPGN.CAVALIER){
-					Cavalier c = new Cavalier(p.getX(), p.getY(), p.getCouleur(), plateau);
-					plateau.setCase(c.getX(), c.getY(), c);
-				}else if(coupCourant.nomPieceTransformation == CoupPGN.FOU){
-					Fou f = new Fou(p.getX(), p.getY(), p.getCouleur(), plateau);
-					plateau.setCase(f.getX(), f.getY(), f);
-				}else if(coupCourant.nomPieceTransformation == CoupPGN.TOUR){
-					Tour t = new Tour(p.getX(), p.getY(), p.getCouleur(), plateau);
-					plateau.setCase(t.getX(), t.getY(), t);
-				}
 			}
 			switchJoueur();
 		}else{

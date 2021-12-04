@@ -2,7 +2,6 @@ package echecs.jeu;
 
 import java.util.ArrayList;
 
-import echecs.jeu.piece.Cavalier;
 import echecs.jeu.piece.Fou;
 import echecs.jeu.piece.Piece;
 import echecs.jeu.piece.Pion;

@@ -215,10 +215,6 @@ public class Piece {
 							Fou f = new Fou(p.getX(), p.getY(), p.getCouleur(), plateau);
 							plateau.setCase(p.getX(), p.getY(), f);
 							coup.nomPieceTransformation = CoupPGN.FOU;
-						}else if(reponse.equals("Cavalier")){
-							Cavalier c = new Cavalier(p.getX(), p.getY(), p.getCouleur(), plateau);
-							plateau.setCase(p.getX(), p.getY(), c);
-							coup.nomPieceTransformation = CoupPGN.CAVALIER;
 						}
 					}
 	            }

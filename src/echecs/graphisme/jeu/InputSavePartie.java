@@ -354,7 +354,6 @@ public class InputSavePartie extends JFrame implements ActionListener{
 			partie.round = textRound.getText();
 			partie.white = textBlanc.getText();
 			partie.black = textNoir.getText();
-			partie.coups = fenetre.getJeu().getHistorique();
 			partie.result = this.resultat;
 			if(Sauvegarde.creerSauvegardePGN(partie, textNomFichier.getText())){
 				this.setVisible(false);

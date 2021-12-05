@@ -76,16 +76,6 @@ public class Fenetre extends JFrame implements ActionListener{
 	private JPanel coordAbscisse;
 	
 	/**
-	 * Zone de texte de l'affichage de l'historique
-	 */
-	private JTextArea historiqueDisplay;
-	
-	/**
-	 * Boutton annuler dernier coup
-	 */
-	private JButton annulerCoup;
-	
-	/**
 	 * Affichage d'un effet de mise en attente pendant le tour de l'IA
 	 */
 	private JPanel tourIA;
@@ -210,8 +200,6 @@ public class Fenetre extends JFrame implements ActionListener{
 		initFenetre();
 		this.setVisible(true);
 		this.setIconImage(Echecs.ICON);
-		this.annulerCoup.setEnabled(false);
-		this.miseEnAttenteReseau(true);
 	}
 	
 	/**
@@ -322,16 +310,7 @@ public class Fenetre extends JFrame implements ActionListener{
 			chat.setPreferredSize(new Dimension(Case.CASE_LENGTH * 8, 30));
 			chat.addActionListener(this);
 		}
-		
-		//Historique de partie
-		historiqueDisplay = new JTextArea();
-		historiqueDisplay.setEditable(false);
-		historiqueDisplay.setLineWrap(true);
-		historiqueDisplay.setMargin(new Insets(5,5,5,5));
-		JScrollPane historique = new JScrollPane(historiqueDisplay);
-		historique.setPreferredSize(new Dimension(Case.CASE_LENGTH * 2, Case.CASE_LENGTH * 1));
-		historique.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		
+
 		//Coords
 		coordAbscisse = new JPanel();
 		coordAbscisse.setLayout(new GridLayout(1, taillegrille));
@@ -367,14 +346,6 @@ public class Fenetre extends JFrame implements ActionListener{
 			coordOrdonnee.add(c);
 		}
 		
-		//Bouton annuler coup
-		annulerCoup = new JButton(new ImageIcon(getClass().getResource(Echecs.RES_PATH+"gauche.png")));
-		annulerCoup.addActionListener(this);
-		annulerCoup.setEnabled(false);
-		if(jeu.isVsInternet()){
-			annulerCoup.setVisible(false);
-		}
-		
 		//Tour de l'ia
 		tourIA = new JPanel(){
 			public void paintComponent(Graphics g){
@@ -395,39 +366,9 @@ public class Fenetre extends JFrame implements ActionListener{
 		}
 		
 		
-		//Barre des menus du jeu
-		if(!fenInternet){
-			Barre b = new Barre(this);
-			this.setJMenuBar(b);
-		}
-		else{
-			BarreMulti b = new BarreMulti(this);
-			this.setJMenuBar(b);
-		}
-		
-		
 		//Positionnement sur le GridBagLayout
 		conteneurGeneral.setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
-		
-		
-		//Placement de affichage Chrono Blanc
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		gbc.gridheight = 1;
-		gbc.anchor = GridBagConstraints.WEST;
-		gbc.insets = new Insets(0, 50, 0, 0);
-		conteneurGeneral.add(chronob, gbc);
-		
-		//Placement de affichage Chrono Noir
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		gbc.gridheight = 1;
-		gbc.anchor = GridBagConstraints.EAST;
-		gbc.insets = new Insets(0, 0, 0, 50);
-		conteneurGeneral.add(chronon, gbc);	
 		
 		//Placement de affichage joueur courant
 		gbc.gridx = 0;
@@ -468,11 +409,6 @@ public class Fenetre extends JFrame implements ActionListener{
 		gbc.insets = new Insets(10,10,0,10);
 		conteneurGeneral.add(coordAbscisse, gbc);
 		
-		//placement bouton annuler coup
-		gbc.gridx = 0;
-		gbc.gridy = 3;
-		conteneurGeneral.add(annulerCoup, gbc);
-		
 		//Placement des logs de la partie
 		gbc.gridx = 2;
 		gbc.gridy = 3;
@@ -480,26 +416,6 @@ public class Fenetre extends JFrame implements ActionListener{
 		gbc.gridwidth = 1;
 		conteneurGeneral.add(scrollZone, gbc);
 		
-		//Placement de l'historique de partie
-		gbc.gridx = 3;
-		gbc.gridy = 3;
-		gbc.gridheight = 3;
-		gbc.insets = new Insets(20, 10, 0, 10);
-		conteneurGeneral.add(historique, gbc);
-		
-		// Placement du chat
-		if(fenInternet){
-			gbc.gridx = 1;
-			gbc.gridy = 4;
-			gbc.insets = new Insets(5, 10, 0, 0);
-			conteneurGeneral.add(chat_text, gbc);
-			
-			gbc.gridx = 2;
-			gbc.gridy = 4;
-			gbc.gridheight = 1;
-			gbc.insets = new Insets(10, 10, 0, 10);
-			conteneurGeneral.add(chat, gbc);
-		}
 		this.setContentPane(conteneurGeneral);
 		
 		JPanel gp = (JPanel)this.getGlassPane();
@@ -520,18 +436,6 @@ public class Fenetre extends JFrame implements ActionListener{
 	}
 	
 	/**
-	 * Ajoute l'historique a afficher
-	 */
-	public void addHistorique(){
-		ArrayList<String> tours = jeu.getHistorique().toStringParTour();
-		historiqueDisplay.setText("");
-		for(String s : tours){
-			historiqueDisplay.append(s+"\n");
-		}
-		historiqueDisplay.setCaretPosition(historiqueDisplay.getDocument().getLength());
-	}
-	
-	/**
 	 * Vide les logs de la partie
 	 */
 	public void clearLogsPartie(){
@@ -544,15 +448,7 @@ public class Fenetre extends JFrame implements ActionListener{
 	 */
 	public String showTransformations(){
 		String[] pieces = {"Tour", "Cavalier", "Fou", "Reine"};
-		return (String)JOptionPane.showInputDialog(null, "TEST FIN DE JEUf", "Promotion du pion", JOptionPane.QUESTION_MESSAGE, null, pieces, pieces[0]);
-	}
-	
-	/**
-	 * Fenetre de sauvegarde d'une partie terminee
-	 * @param resultat resultat de la partie
-	 */
-	public void fenetreSauvegarde(String resultat){
-		new InputSavePartie(this, resultat);
+		return (String)JOptionPane.showInputDialog(null, "TEST FIN DE JEUf", "Victoire", JOptionPane.QUESTION_MESSAGE, null, pieces, pieces[0]);
 	}
 	
 	@Override
@@ -565,13 +461,7 @@ public class Fenetre extends JFrame implements ActionListener{
 			}
 		}
 		
-		if(jeu.getHistorique().getList().size() < 1 || (jeu.getIAThread() != null && jeu.getHistorique().getList().size() <= 1)){
-			this.annulerCoup.setEnabled(false);
-		}else{
-			this.annulerCoup.setEnabled(true);
-		}
 		this.grille.updateGrille();
-		this.addHistorique();
 		this.joueurCourant.update();
 		super.repaint();
 	}
@@ -582,59 +472,8 @@ public class Fenetre extends JFrame implements ActionListener{
 	 */
 	public void tourIA(boolean b){
 		this.grille.setRecoisInput(!b);
-		this.annulerCoup.setEnabled(!b);
 		this.getGlassPane().setVisible(b);
 	}
-	
-	/**
-	 * Active ou desactive la mise en attente dans le mode en ligne
-	 * @param b
-	 */
-	public void miseEnAttenteReseau(boolean b){
-		this.grille.setRecoisInput(!b);
-		this.getGlassPane().setVisible(b);
-	}
-	
-	/**
-	 * Active l'affichage des chronos
-	 * @param b
-	 */
-	public void activeBlitz(boolean b){
-		this.blitz = b;
-		this.chronob.setVisible(b);
-		this.chronon.setVisible(b);
-	}
-	
-	/**
-	 * Met a jour l'affichage du chrono blanc
-	 * @param m minute
-	 * @param s seconde
-	 */
-	public void updateChronoB(int m, int s){
-		if(m == 0 && s <= 30){
-			chronob.setForeground(Color.red);
-		}
-		chronob.setText(m+":"+s);
-		if(m ==0 && s==0){
-			this.fenetreSauvegarde((jeu.getJoueurCourant().getCouleur().equals("NOIR"))? Partie.WHITE_WIN : Partie.BLACK_WIN	);
-		}
-	}
-	
-	/**
-	 * Met a jour l'affichage du chrono noir
-	 * @param m minute
-	 * @param s seconde
-	 */
-	public void updateChronoN(int m, int s){
-		if(m == 0 && s <= 30){
-			chronob.setForeground(Color.red);
-		}
-		chronon.setText(m+":"+s);
-		if(m ==0 && s==0){
-			this.fenetreSauvegarde((jeu.getJoueurCourant().getCouleur().equals("NOIR"))? Partie.WHITE_WIN : Partie.BLACK_WIN	);
-		}
-	}
-	
 	/**
 	 * Getter jeu
 	 * @return jeu
@@ -651,29 +490,9 @@ public class Fenetre extends JFrame implements ActionListener{
 		return grille;
 	}
 	
-	/**
-	 * Getter mode blitz
-	 * @return
-	 */
-	public boolean modeBlitz(){
-		return this.blitz;
-	}
-	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
-		if(source == annulerCoup){
-			jeu.getPlateau().annulerDernierCoup(true);
-			if(jeu.isVsIA()){
-				jeu.getPlateau().annulerDernierCoup(true);
-			}
-			grille.resetEtatCases();
-			if(!jeu.getHistorique().isEmpty()){
-				grille.setCaseDernierCoup(jeu.getHistorique().getDernierCoup().departMemoire.x, jeu.getHistorique().getDernierCoup().departMemoire.y);
-				grille.setCaseDernierCoup(jeu.getHistorique().getDernierCoup().arrivee.x, jeu.getHistorique().getDernierCoup().arrivee.y);
-			}
-			this.repaint();
-		}
 		if(source == chat){
 			if(!chat.getText().equals("")){
 				((JeuClient) jeu).envoyer("/say " + chat.getText());

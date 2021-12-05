@@ -304,14 +304,6 @@ public class ReplayFenetre extends JFrame implements ActionListener{
 	}
 	
 	/**
-	 * Getter historique
-	 * @return historique
-	 */
-	public DefaultListModel getHistorique(){
-		return historique;
-	}
-	
-	/**
 	 * Getter bouton du coup precedent
 	 * @return JButton
 	 */

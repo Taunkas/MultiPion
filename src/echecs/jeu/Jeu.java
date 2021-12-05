@@ -92,21 +92,6 @@ public class Jeu{
 	protected Fenetre fenetre;
 	
 	/**
-	 * Jeu est mode blitz
-	 */
-	private boolean modeBlitz;
-	
-	/**
-	 * Reference du crhono blanc si mode blitz
-	 */
-	private Chrono chrono_blanc;
-	
-	/**
-	 * Reference du chrono noir si mode blitz
-	 */
-	private Chrono chrono_noir;
-	
-	/**
 	 * Constructeur
 	 */
 	public Jeu() {
@@ -123,9 +108,7 @@ public class Jeu{
 		pieceSelectionee = null;
 		historique = null;
 		fenetre = null;
-		modeBlitz = false;
-		chrono_blanc = null;
-		chrono_noir = null;
+		//modeBlitz = false;
 		estServeur = false;
 	}
 	
@@ -135,7 +118,6 @@ public class Jeu{
 	 */
 	public Jeu(Fenetre fenetre){
 		super();
-		this.modeBlitz = fenetre.modeBlitz();
 		this.plateau = new Plateau(this);
 		this.prises = new ArrayList<Piece>();
 		joueurBlanc = new Joueur("BLANC");
@@ -145,16 +127,6 @@ public class Jeu{
 		this.fenetre = fenetre;
 		vsIA = false;
 		plateau.miseEnPlacePlateau();
-		
-		chrono_blanc = new Chrono(15, 0, this.fenetre, true);
-		chrono_noir = new Chrono(15, 0, this.fenetre, false);
-		chrono_blanc.start();
-		chrono_noir.start();
-		chrono_blanc.pause(true);
-		chrono_noir.pause(true);
-		if(modeBlitz){
-			chrono_blanc.pause(false);
-		}
 	}
 	
 	/**
@@ -165,7 +137,6 @@ public class Jeu{
 	 */
 	public Jeu(Fenetre fenetre, int m, int s){
 		super();
-		this.modeBlitz = fenetre.modeBlitz();
 		this.plateau = new Plateau(this);
 		this.prises = new ArrayList<Piece>();
 		joueurBlanc = new Joueur("BLANC");
@@ -175,16 +146,6 @@ public class Jeu{
 		this.fenetre = fenetre;
 		vsIA = false;
 		plateau.miseEnPlacePlateau();
-		
-		chrono_blanc = new Chrono(m, s, this.fenetre, true);
-		chrono_noir = new Chrono(m, s, this.fenetre, false);
-		chrono_blanc.start();
-		chrono_noir.start();
-		chrono_blanc.pause(true);
-		chrono_noir.pause(true);
-		if(modeBlitz){
-			chrono_blanc.pause(false);
-		}
 	}
 
 	/**
@@ -241,7 +202,7 @@ public class Jeu{
 		iaThread2.start();
 		
 		joueurCourant = joueurBlanc;
-		historique = new Historique();
+		//historique = new Historique();
 		this.fenetre = fenetre;
 		this.plateau = new Plateau(this);
 		this.prises = new ArrayList<Piece>();
@@ -269,33 +230,7 @@ public class Jeu{
 			this.deplacerPiece(coord.x, coord.y);
 		}else{
 			fenetre.repaint();
-			fenetre.fenetreSauvegarde((joueurCourant.getCouleur().equals("BLANC"))? Partie.WHITE_WIN : Partie.BLACK_WIN	);
 		}
-	}
-	
-	/**
-	 * Setter des chronos
-	 * @param blancMinute minute du joueur blanc
-	 * @param blancSeconde seconde du joueur blanc
-	 * @param noirMinute minute du joueur noir
-	 * @param noirSeconde seconde du joueur noir
-	 */
-	public void setChronos(int blancMinute, int blancSeconde, int noirMinute, int noirSeconde){
-		this.chrono_blanc.pause(true);
-		this.chrono_noir.pause(true);
-		this.chrono_blanc.setSeconde(blancSeconde);
-		this.chrono_blanc.setMinute(blancMinute);
-		this.chrono_noir.setSeconde(noirSeconde);
-		this.chrono_noir.setMinute(noirMinute);
-		if(joueurCourant.equals(joueurBlanc)){
-			chrono_blanc.pause(false);
-			chrono_noir.pause(true);
-		}else{
-			chrono_blanc.pause(true);
-			chrono_noir.pause(false);
-		}
-		this.modeBlitz = true;
-		fenetre.activeBlitz(true);
 	}
 	
 	/**
@@ -369,72 +304,6 @@ public class Jeu{
 			}
 		}
 	}
-	
-	/**
-	 * Joue l'historique
-	 * @param historiqueSave historique a rejoeur
-	 * @return vrai si on a reussi a jouer tous les coups
-	 */
-	public boolean jouerSauvegarde(ArrayList<CoupPGN> historiqueSave){
-		//reset de la partie
-		reset();
-		//Joue chaque coup
-		for(int i = 0; i < historiqueSave.size(); i++){
-			CoupPGN coup = historiqueSave.get(i);
-			
-			if(coup.isPrise){
-				if(plateau.getCase(coup.arrivee.x, coup.arrivee.y) == null){
-					JOptionPane.showMessageDialog(null, "Erreur lors du chargement de l'historique des coups.\nRaison : coup "+coup.toString()+" n'est pas une prise.", "Erreur lors du chargement de l'historique", JOptionPane.ERROR_MESSAGE);
-					this.reset();
-					return false;
-				}
-				this.prises.add(plateau.getCase(coup.arrivee.x, coup.arrivee.y));
-			}
-			
-			if(coup.isPetitRoque){
-				int colonne = (joueurCourant.getCouleur().equals("BLANC"))? 0 : 7;
-			}else if(coup.nomPiece == ' '){
-				ArrayList<Pion> pions = plateau.getPions(joueurCourant.getCouleur());
-				boolean coupValide = false;
-				for(Pion p: pions){
-					if(p.mouvementPossible(coup.arrivee.x, coup.arrivee.y) && p.coupPossible(coup.arrivee.x, coup.arrivee.y)){
-						if(coup.depart.x != -1 && coup.depart.y != -1 && coup.depart.x == p.getX() && coup.depart.y == p.getY()
-								|| coup.depart.x != -1 && coup.depart.x == p.getX()
-								|| coup.depart.y != -1 && coup.depart.y == p.getY()
-								|| coup.depart.x == -1 && coup.depart.y == -1){
-							if(coup.isTransformation){
-								plateau.setCase(p.getX(), p.getY(), null);
-								coup.departMemoire.set(p.getX(), p.getY());
-							}else{
-								coup.departMemoire.set(p.getX(), p.getY());
-								plateau.setCase(coup.arrivee.x, coup.arrivee.y, p);
-								plateau.setCase(p.getX(), p.getY(), null);
-								p.setX(coup.arrivee.x);
-								p.setY(coup.arrivee.y);
-							}
-							p.setPremierCoup(false);
-							coupValide = true;
-							break;
-						}
-					}
-				}
-				if(!coupValide){
-					JOptionPane.showMessageDialog(null, "Erreur lors du chargement de l'historique des coups.\nRaison : "+coup.toString()+" : aucun pion ne correspond au coup.", "Erreur lors du chargement de l'historique des coups", JOptionPane.ERROR_MESSAGE);
-					this.reset();
-					return false;
-				}
-			}
-			historique.addCoupPGN(coup);
-			switchJoueur();
-		}
-		
-		aucunePieceSelectionee();
-		fenetre.getGrille().resetEtatCases();
-		fenetre.repaint();
-		
-		return true;
-	}
-	
 	/**
 	 * Recherche les prerequis pour un coups
 	 * @param p piece sur laquelle il faut rechercher les prerequis
@@ -522,16 +391,6 @@ public class Jeu{
 	public void switchJoueur(){
 		joueurCourant = (joueurCourant == joueurBlanc)? joueurNoir : joueurBlanc;
 		
-		if(modeBlitz){
-			if(joueurCourant.getCouleur().equals("BLANC")){
-				chrono_blanc.pause(false);
-				chrono_noir.pause(true);
-			}
-			else{
-				chrono_noir.pause(false);
-				chrono_blanc.pause(true);
-			}
-		}
 	}
 	
 	/**
@@ -607,40 +466,6 @@ public class Jeu{
 	 */
 	public ArrayList<Piece> getPrises(){
 		return this.prises;
-	}
-	
-	/**
-	 * Getter du chrono blanc
-	 * @return
-	 */
-	public Chrono getChronoBlanc(){
-		return chrono_blanc;
-	}
-	
-	/**
-	 * Getter du chrono noir
-	 * @return
-	 */
-	public Chrono getChronoNoir(){
-		return chrono_noir;
-	}
-	
-	/**
-	 * Test si le jeu est en mode blitz
-	 * @return true si mode blitz
-	 */
-	public boolean isBlitz(){
-		return this.modeBlitz;
-	}
-	
-	/**
-	 * Desactive le mode blitz, met en pause les timers des joueurs
-	 */
-	public void desactiveBlitz(){
-		this.modeBlitz = false;
-		this.chrono_blanc.pause(true);
-		this.chrono_noir.pause(true);
-		this.fenetre.activeBlitz(false);
 	}
 	
 	/**

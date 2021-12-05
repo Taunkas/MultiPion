@@ -63,63 +63,6 @@ public class Sauvegarde {
 			}
 			
 			ligne  = br.readLine();
-			
-			//sauvegarde de temps pour le blitz
-			if(ligne != null){
-				if(ligne.length() != 8){
-					int reponse = JOptionPane.showConfirmDialog(null, "Le format d'ecriture du temps pour le mode blitz est incorrect\nRaison : Mauvaise longueur\nSouhaitez-vous continuer la partie sans le mode Blitz ?", "Echec de la lecture de la sauvegarde", JOptionPane.YES_NO_OPTION);
-					if(reponse != 0){
-						jeu.getFenetre().setVisible(false);
-						jeu.getFenetre().dispose();
-						new Menu();
-					}
-					return false;
-				}
-				char[] valeurs = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
-				for(int i = 0; i < ligne.length(); i++){
-					boolean valide = false;
-					for(char c : valeurs){
-						if(ligne.charAt(i) == c){
-							valide = true;
-						}
-					}
-					if(!valide){
-						int reponse = JOptionPane.showConfirmDialog(null, "Le format d'ecriture du temps pour le mode blitz est incorrect\nRaison : un des caracteres n'est pas un chiffre\nSouhaitez-vous continuer la partie sans le mode Blitz ?", "Echec de la lecture de la sauvegarde", JOptionPane.YES_NO_OPTION);
-						if(reponse != 0){
-							jeu.getFenetre().setVisible(false);
-							jeu.getFenetre().dispose();
-							new Menu();
-						}
-						return false;
-					}
-				}
-				
-				int chronos = Integer.parseInt(ligne);
-				int blancMinute = chronos/1000000;
-				int blancSeconde = (chronos/10000)%100;
-				int noirMinute = (chronos/100)%100;
-				int noirSeconde = chronos%100;
-				if(blancMinute > 60 || blancSeconde > 60 || noirMinute > 60 || noirSeconde > 60){
-					int reponse = JOptionPane.showConfirmDialog(null, "Le format d'ecriture du temps pour le mode blitz est incorrect\nRaison : format depasse 60 min/sec\nSouhaitez-vous continuer la partie sans le mode Blitz ?", "Echec de la lecture de la sauvegarde", JOptionPane.YES_NO_OPTION);
-					if(reponse != 0){
-						jeu.getFenetre().setVisible(false);
-						jeu.getFenetre().dispose();
-						new Menu();
-					}
-					return false;
-				}
-				int reponse = JOptionPane.showConfirmDialog(null, "Souhaitez-vous reprendre la partie en mode Blitz ?", "Mode Blitz", JOptionPane.YES_NO_OPTION);
-				if(reponse == 0){
-					jeu.setChronos(blancMinute, blancSeconde, noirMinute, noirSeconde);
-				}else if(jeu.isBlitz()){
-					jeu.desactiveBlitz();
-				}
-			//Aucune sauvegarde de temps pour le blitz
-			}else{
-				if(jeu.isBlitz()){
-					jeu.desactiveBlitz();
-				}
-			}
 			jeu.jouerSauvegarde(coups);
 			
 		}catch(Exception e){
@@ -146,14 +89,6 @@ public class Sauvegarde {
 				file.createNewFile();
 			}
 			PrintWriter pw = new PrintWriter(new FileWriter(file));
-			
-			//Historique
-			pw.println(jeu.getHistorique().toStringSavePGN());
-			
-			//Blitz
-			if(jeu.isBlitz()){
-				pw.println(jeu.getChronoBlanc().toString()+""+jeu.getChronoNoir().toString());
-			}
 
 			pw.flush();
 			pw.close();

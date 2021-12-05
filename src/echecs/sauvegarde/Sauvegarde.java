@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 import echecs.Echecs;
 import echecs.graphisme.Menu;
 import echecs.jeu.Jeu;
-import echecs.jeu.Replay;
+
 
 /**
  * Contient diverses fonctions de lecture / ecriture de sauvegarde
@@ -63,7 +63,7 @@ public class Sauvegarde {
 			}
 			
 			ligne  = br.readLine();
-			jeu.jouerSauvegarde(coups);
+			//jeu.jouerSauvegarde(coups);
 			
 		}catch(Exception e){
 			e.printStackTrace();

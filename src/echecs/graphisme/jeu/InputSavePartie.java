@@ -151,7 +151,7 @@ public class InputSavePartie extends JFrame implements ActionListener{
 	 * @param fenetre reference de la fenetre de jeu
 	 */
 	public InputSavePartie(Fenetre fenetre, String resultat){
-		super("Sauvegarde la partie");
+		super("Sauvegarde la partie + Test fin");
 		this.fenetre = fenetre;
 		this.resultat = resultat;
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

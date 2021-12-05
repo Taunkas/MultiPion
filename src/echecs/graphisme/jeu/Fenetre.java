@@ -141,7 +141,7 @@ public class Fenetre extends JFrame implements ActionListener{
 	 * @param y position y de la fenetre
 	 */
 	public Fenetre(int x, int y){
-		super("Jeu d'echecs");
+		super("Jeu MultiPion");
 		jeu = new Jeu(this);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Dimension dim = new Dimension(Case.CASE_LENGTH * 14, Case.CASE_LENGTH * 12);
@@ -200,7 +200,7 @@ public class Fenetre extends JFrame implements ActionListener{
 	 * @param client reference du client
 	 */
 	public Fenetre(JoueurClient client){
-		super("Jeu d'echecs");
+		super("Jeu MultiPion");
 		fenInternet = true;
 		jeu = new JeuClient(this, client);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -221,7 +221,7 @@ public class Fenetre extends JFrame implements ActionListener{
 	 * @param blitz vrai si mode blitz
 	 */
 	public Fenetre(int x, int y, boolean blitz){
-		super("Jeu d'echecs");
+		super("Jeu MultiPion");
 		this.blitz = blitz;
 		System.out.println(this.blitz);
 		jeu = new Jeu(this);
@@ -244,7 +244,7 @@ public class Fenetre extends JFrame implements ActionListener{
 	 * @param s temps en seconde du chrono
 	 */
 	public Fenetre(int x, int y, boolean blitz, int m, int s){
-		super("Jeu d'echecs");
+		super("Jeu MultiPion");
 		this.blitz = blitz;
 		System.out.println(this.blitz);
 		jeu = new Jeu(this, m, s);
@@ -356,14 +356,14 @@ public class Fenetre extends JFrame implements ActionListener{
 	
 		for(char i = 'A'; i <= lettre; i++){
 			JLabel c = new JLabel(i+"", JLabel.CENTER);
-			c.setPreferredSize(new Dimension(Case.CASE_LENGTH, 10));
+			c.setPreferredSize(new Dimension(Case.CASE_LENGTH/taillegrille*8 , 9));
 			coordAbscisse.add(c);
 		}
 		coordOrdonnee = new JPanel();
 		coordOrdonnee.setLayout(new GridLayout(taillegrille, 1));
 		for(int i = taillegrille; i >= 1; i--){
 			JLabel c = new JLabel(i+"");
-			c.setPreferredSize(new Dimension(10, Case.CASE_LENGTH));
+			c.setPreferredSize(new Dimension(9, Case.CASE_LENGTH/taillegrille*8 ));
 			coordOrdonnee.add(c);
 		}
 		

@@ -129,7 +129,7 @@ public class CoupPGN {
 		this();
 		this.representationString = coupString;
 		
-		try{
+		try{/*
 			//Recherche de la piece
 			if(coupString.charAt(0) == 'O'){
 				if(coupString.startsWith("O-O-O")){
@@ -159,7 +159,8 @@ public class CoupPGN {
 				this.depart.y = Integer.parseInt(coupString.charAt(0)+"") -1;
 				coupString = coupString.substring(1);
 			}
-			
+			*/
+		
 			//Cas d'une attaque
 			if(coupString.length() >= 1 && coupString.charAt(0) == 'x'){
 				this.isPrise = true;
@@ -357,7 +358,7 @@ public class CoupPGN {
 	 * @return boolean
 	 */
 	private static boolean isValidChar(char c){
-		for(char i = 'a'; i <= 'h'; i++){
+		for(char i = 'a'; i <= 'j'; i++){
 			if(c == i) return true;
 		}
 		return false;
@@ -382,7 +383,7 @@ public class CoupPGN {
 	 */
 	private static int convertionCharEnInt(char c){
 		int valeur =0;
-		for(char i = 'a'; i <= 'h'; i++){
+		for(char i = 'a'; i <= 'j'; i++){
 			if(c == i) return valeur;
 			valeur++;
 		}
@@ -396,7 +397,7 @@ public class CoupPGN {
 	 */
 	private static char convertionIntEnChar(int a){
 		int valeur = 0;
-		for(char i = 'a'; i <= 'h'; i++){
+		for(char i = 'a'; i <= 'j'; i++){
 			if(a == valeur) return i;
 			valeur++;
 		}

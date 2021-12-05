@@ -153,7 +153,7 @@ public class Menu extends JFrame implements ActionListener, MouseListener{
 		replay.setPreferredSize(taille);
 		replay.addMouseListener(this);
 		replay.addActionListener(this);
-		dimgrille = new JTextField("7");
+		dimgrille = new JTextField("9");
 		dimgrille.setPreferredSize(taille);
 		iavsia = new JButton("IA vs IA");
 		iavsia.setPreferredSize(taille);

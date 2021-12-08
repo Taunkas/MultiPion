@@ -27,8 +27,6 @@ import javax.swing.JTextField;
 import echecs.Echecs;
 import echecs.graphisme.Case;
 import echecs.jeu.Jeu;
-import echecs.jeu.JeuClient;
-import echecs.reseau.client.JoueurClient;
 import echecs.jeu.IA.ValeursEvaluation;
 import echecs.sauvegarde.Partie;
 import echecs.graphisme.Menu;
@@ -185,66 +183,10 @@ public class Fenetre extends JFrame implements ActionListener{
 		this.setIconImage(Echecs.ICON);
 	}
 	
-	/**
-	 * Constructeur
-	 * @param client reference du client
-	 */
-	public Fenetre(JoueurClient client){
-		super("Jeu MultiPion");
-		fenInternet = true;
-		jeu = new JeuClient(this, client);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		Dimension dim = new Dimension(Case.CASE_LENGTH * 14, Case.CASE_LENGTH * 13);
-		this.setSize(dim);
-		this.setMinimumSize(dim);
-		initFenetre();
-		this.setVisible(true);
-		this.setIconImage(Echecs.ICON);
-	}
+
 	
-	/**
-	 * Constructeur
-	 * @param x position en x de la fenetre
-	 * @param y position en y de la fenetre
-	 * @param blitz vrai si mode blitz
-	 */
-	public Fenetre(int x, int y, boolean blitz){
-		super("Jeu MultiPion");
-		this.blitz = blitz;
-		System.out.println(this.blitz);
-		jeu = new Jeu(this);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		Dimension dim = new Dimension(Case.CASE_LENGTH * 14, Case.CASE_LENGTH * 12);
-		this.setSize(dim);
-		this.setMinimumSize(dim);
-		initFenetre();
-		this.setLocation(x - this.getWidth()/2, y - this.getHeight()/2);
-		this.setVisible(true);
-		this.setIconImage(Echecs.ICON);
-	}
-	
-	/**
-	 * Constructeur
-	 * @param x position x de la fenetre
-	 * @param y position y de la fenetre
-	 * @param blitz vrai si mode blitz
-	 * @param m temps en minute du chrono
-	 * @param s temps en seconde du chrono
-	 */
-	public Fenetre(int x, int y, boolean blitz, int m, int s){
-		super("Jeu MultiPion");
-		this.blitz = blitz;
-		System.out.println(this.blitz);
-		jeu = new Jeu(this, m, s);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		Dimension dim = new Dimension(Case.CASE_LENGTH * 14, Case.CASE_LENGTH * 12);
-		this.setSize(dim);
-		this.setMinimumSize(dim);
-		initFenetre();
-		this.setLocation(x - this.getWidth()/2, y - this.getHeight()/2);
-		this.setVisible(true);
-		this.setIconImage(Echecs.ICON);
-	}
+
+
 	
 	/**
 	 * Initialise les variables et positionne les elements sur la fenetre
@@ -448,7 +390,7 @@ public class Fenetre extends JFrame implements ActionListener{
 	 */
 	public String showTransformations(){
 		String[] pieces = {"Tour", "Cavalier", "Fou", "Reine"};
-		return (String)JOptionPane.showInputDialog(null, "TEST FIN DE JEUf", "Victoire", JOptionPane.QUESTION_MESSAGE, null, pieces, pieces[0]);
+		return (String)JOptionPane.showInputDialog(null, "TEST FIN DE JEU", "Victoire", JOptionPane.QUESTION_MESSAGE, null, pieces, pieces[0]);
 	}
 	
 	@Override
@@ -489,15 +431,12 @@ public class Fenetre extends JFrame implements ActionListener{
 	public GrilleJeu getGrille(){
 		return grille;
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		Object source = e.getSource();
-		if(source == chat){
-			if(!chat.getText().equals("")){
-				((JeuClient) jeu).envoyer("/say " + chat.getText());
-				chat.setText("");
-			}
-		}
+		// TODO Auto-generated method stub
+		
 	}
+	
+
 }

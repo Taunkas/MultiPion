@@ -65,10 +65,6 @@ public class SelectionMode extends JFrame implements ActionListener{
 			new Fenetre(this.getX() + this.getWidth(), this.getY() + this.getHeight());
 		}
 		
-		if(source == bblitz){
-			this.setVisible(false);
-			this.dispose();
-			new SelectionDureeBlitz(menu, this.getX() + this.getWidth()/2, this.getY() + this.getHeight()/2);
-		}
+		
 	}
 }

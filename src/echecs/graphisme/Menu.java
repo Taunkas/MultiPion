@@ -24,7 +24,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import echecs.Echecs;
-import echecs.graphisme.replay.ReplayFenetre;
 
 /**
  * Menu du jeu d'echec
@@ -294,14 +293,7 @@ public class Menu extends JFrame implements ActionListener, MouseListener{
 			this.dispose();
 			 System.exit(0);
 		}
-		if(source == enLigne){
-			new EcranEnLigne(this.getX() + this.getWidth()/2, this.getY() + this.getHeight()/2, this);
-		}
-		if(source == replay){
-			setVisible(false);
-			dispose();
-			new ReplayFenetre(this.getX() + this.getWidth()/2, this.getY() + this.getHeight()/2);
-		}
+		
 		
 		if(source == iavsia){
 			new ConfigIAvsIA(this, this.getX() + this.getWidth()/2, this.getY() + this.getHeight()/2);

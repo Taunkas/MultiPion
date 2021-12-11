@@ -24,6 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import multipion.MultiPion;
+import multipion.graphisme.jeu.Fenetre;
 
 /**
  * Menu du jeu d'echec
@@ -152,7 +153,7 @@ public class Menu extends JFrame implements ActionListener, MouseListener{
 		replay.setPreferredSize(taille);
 		replay.addMouseListener(this);
 		replay.addActionListener(this);
-		dimgrille = new JTextField("9");
+		dimgrille = new JTextField("3");
 		dimgrille.setPreferredSize(taille);
 		iavsia = new JButton("IA vs IA");
 		iavsia.setPreferredSize(taille);
@@ -282,7 +283,10 @@ public class Menu extends JFrame implements ActionListener, MouseListener{
 		if(source == deuxJoueurs){
 ///// CONDITION A METTRE SUR LE CHOIX DE LA TAILLE ///////////////////////////////////////////////////////////			
 			taillegrille=Integer.parseInt(dimgrille.getText());			
-			new SelectionMode(this.getX() + this.getWidth()/2, this.getY() + this.getHeight()/2, this);
+			
+			this.setVisible(false);
+			this.dispose();
+			new Fenetre(this.getX() + this.getWidth(), this.getY() + this.getHeight());
 			
 		}
 		if(source == aPropos){

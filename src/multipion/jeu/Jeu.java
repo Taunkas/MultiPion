@@ -257,7 +257,7 @@ public class Jeu{
 			System.out.print(tmp);
 			if(tmp==0) {
 				System.out.print(coul+" est bloquer");
-				plateau.getJeu().getFenetre().Victoire("Victoire, les "+p.getCouleur()+" est bloquer.");
+				plateau.getJeu().getFenetre().Victoire(p.getCouleur(),"en bloquant votre adversaire.");
 			}
 		}
 

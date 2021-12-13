@@ -143,7 +143,7 @@ public class Piece {
 	            	Pion p = (Pion) this;
 					if(p.isPromotion()){
 						coup.isTransformation = true;
-							plateau.getJeu().getFenetre().Victoire("Victoire des "+p.getCouleur());
+							plateau.getJeu().getFenetre().Victoire(p.getCouleur(),"en allant bout du plateau.");
 					}
 	            plateau.getJeu().getHistorique().addCoupPGN(coup);
 	            return true;

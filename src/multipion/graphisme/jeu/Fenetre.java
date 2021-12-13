@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import multipion.graphisme.jeu.MessageFin;
 import multipion.MultiPion;
 import multipion.graphisme.Case;
 import multipion.jeu.Jeu;
@@ -104,7 +105,7 @@ public class Fenetre extends JFrame implements ActionListener{
 		this.setSize(dim);
 		this.setMinimumSize(dim);
 		initFenetre();
-		this.setLocation(x - this.getWidth()/2, y - this.getHeight()/2);
+		this.setLocation(x +100 - this.getWidth(), y+100 - this.getHeight());
 		this.setVisible(true);
 		this.setIconImage(MultiPion.ICON);
 	}
@@ -332,12 +333,13 @@ public class Fenetre extends JFrame implements ActionListener{
 	}
 	
 	/**
-	 * Fenetre de dialogue de selection de la promotion du pion
+	 * Fenetre de dialogue de selection de victoire
 	 * @return le choix
 	 */
-	public void Victoire(String str){
+	public void Victoire(String str, String fin){
 		
-		JOptionPane.showMessageDialog(chat_text, str);
+		new MessageFin(this, str, fin);
+		//JOptionPane.showMessageDialog(chat_text, str);
 		
 	}
 	

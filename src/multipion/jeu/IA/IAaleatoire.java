@@ -2,6 +2,7 @@ package multipion.jeu.IA;
 
 import java.util.ArrayList;
 
+
 import multipion.MultiPion;
 import multipion.jeu.Jeu;
 import multipion.jeu.Joueur;
@@ -46,19 +47,37 @@ public class IAaleatoire extends Joueur implements IA{
 		int y = -1;
 		Piece pieceABouger = null;
 		while(echec){
+
 			int index;
 			pieceABouger = null;
 			do{
+
 				index = (int) (Math.random()*pieces.size());
 				pieceABouger = pieces.get(index);
+				
+				
 			}while(pieceABouger.casesPossibles().isEmpty());
-			
+
 			int j = (int) (Math.random()*pieceABouger.casesPossibles().size());
 			x = pieceABouger.casesPossibles().get(j).x;
 			y = pieceABouger.casesPossibles().get(j).y;
 			
+			
 			Coordonnee coordPieceABouger = new Coordonnee(pieceABouger.getX(), pieceABouger.getY());
+			if(pieceABouger.deplacer(x, y)){
+				
+					echec = false;
+				
+			}else{
+				MultiPion.addLog("Erreur dans la recherche de coup pour l'ia aleatoire", MultiPion.TypeLog.ERREUR);
+			}
+			jeu.getPlateau().annulerDernierCoup(false);
 			jeu.setPieceSelectionee(coordPieceABouger.x, coordPieceABouger.y);
+			
+			if(pieceABouger.casesPossibles().isEmpty()==true){
+				break;
+			}
+			
 		}
 		this.coordonneeAJouer = new Coordonnee(x,y);
 	}

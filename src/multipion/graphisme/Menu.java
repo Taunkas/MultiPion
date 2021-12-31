@@ -145,7 +145,7 @@ public class Menu extends JFrame implements ActionListener, MouseListener{
 		aPropos.addActionListener(this);
 		quitter = new JButton("Quitter");
 		quitter.addActionListener(this);
-		enLigne = new JButton("En Ligne");
+		enLigne = new JButton("Test");
 		enLigne.setPreferredSize(taille);
 		enLigne.addMouseListener(this);
 		enLigne.addActionListener(this);
@@ -279,6 +279,7 @@ public class Menu extends JFrame implements ActionListener, MouseListener{
 
 		if(source == unJoueur){
 			new EcranSelection(this.getX() + this.getWidth()/2, this.getY() + this.getHeight()/2, this);
+			taillegrille=Integer.parseInt(dimgrille.getText());	
 		}
 		if(source == deuxJoueurs){
 ///// CONDITION A METTRE SUR LE CHOIX DE LA TAILLE ///////////////////////////////////////////////////////////			
@@ -300,6 +301,7 @@ public class Menu extends JFrame implements ActionListener, MouseListener{
 		
 		
 		if(source == iavsia){
+			taillegrille=Integer.parseInt(dimgrille.getText());	
 			new ConfigIAvsIA(this, this.getX() + this.getWidth()/2, this.getY() + this.getHeight()/2);
 		}
 	}

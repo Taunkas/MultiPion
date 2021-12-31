@@ -167,6 +167,36 @@ public class Plateau {
     	}
     	return p;
     }
+    
+    public void annulerDernierCoup(boolean changerDeJoueur){
+    	if(jeu.getHistorique().isEmpty()) return;
+    	
+    	CoupPGN coup = jeu.getHistorique().getDernierCoup();
+    	Piece pieceDuCoup = plateau[coup.arrivee.x][coup.arrivee.y];
+    	if(coup.nomPiece == ' ' && ((coup.departMemoire.y == 1 && pieceDuCoup.getCouleur().equals("BLANC")) || (coup.departMemoire.y == 6 && pieceDuCoup.getCouleur().equals("NOIR")))){
+    		Pion pionDuCoup = (Pion)pieceDuCoup;
+    		pionDuCoup.setPremierCoup(true);
+    	}
+    	plateau[coup.departMemoire.x][coup.departMemoire.y] = pieceDuCoup;
+    	if(coup.isPrise){
+    		plateau[coup.arrivee.x][coup.arrivee.y] = jeu.getPrises().get(jeu.getPrises().size()-1);
+    		jeu.getPrises().remove(jeu.getPrises().size()-1);
+    	}else{
+    		plateau[coup.arrivee.x][coup.arrivee.y] = null;
+    	}
+    	pieceDuCoup.setX(coup.departMemoire.x);
+    	pieceDuCoup.setY(coup.departMemoire.y);
+    	
+    	if(changerDeJoueur){
+    		jeu.switchJoueur();
+    	}
+    	jeu.getHistorique().supprimeDernierCoup();
+    	if(jeu.getFenetre() != null){
+    		jeu.getFenetre().repaint();
+    	}
+    }
+    
+    
     /**
      * Getter des pions de la couleur choisi
      * @param couleur couleur des pions

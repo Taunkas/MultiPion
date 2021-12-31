@@ -109,8 +109,7 @@ public class Jeu{
 		pieceSelectionee = null;
 		historique = null;
 		fenetre = null;
-		//modeBlitz = false;
-		estServeur = false;
+
 	}
 	
 	/**
@@ -130,24 +129,7 @@ public class Jeu{
 		plateau.miseEnPlacePlateau();
 	}
 	
-	/**
-	 * Constructeur pour une partie en mode blitz
-	 * @param fenetre reference de la fenetre
-	 * @param m minute
-	 * @param s seconde
-	 */
-	public Jeu(Fenetre fenetre, int m, int s){
-		super();
-		this.plateau = new Plateau(this);
-		this.prises = new ArrayList<Piece>();
-		joueurBlanc = new Joueur("BLANC");
-		joueurNoir = new Joueur("NOIR");
-		joueurCourant = joueurBlanc;
-		historique = new Historique();
-		this.fenetre = fenetre;
-		vsIA = false;
-		plateau.miseEnPlacePlateau();
-	}
+	
 
 	/**
 	 * Constructeur pour une partie contre l'ordinateur

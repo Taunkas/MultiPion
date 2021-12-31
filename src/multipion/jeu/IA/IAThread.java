@@ -76,6 +76,7 @@ public class IAThread extends Thread{
 	@Override
 	public void run(){
 		if(MultiPion.DEBUG) MultiPion.addLog("Thread de l'ia commence", MultiPion.TypeLog.INFO);
+		System.out.println("Début tour Ia");
 		while(vivant){
 			checkPause();
 			if(!vivant) break;

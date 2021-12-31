@@ -77,7 +77,7 @@ public class EcranSelection extends JFrame implements ActionListener, ItemListen
 	 * @param y
 	 */
 	public EcranSelection(int x, int y, Menu menu){
-		super("Jeu d'echecs");
+		super("Jeu MultiPion");
 		this.menu = menu;
 		this.setSize(450, 300);
 		this.setMinimumSize(this.getSize());
@@ -214,7 +214,7 @@ public class EcranSelection extends JFrame implements ActionListener, ItemListen
 				menu.setVisible(false);
 				menu.dispose();
 			}
-			new Fenetre(this.getX(), this.getY(), toggleBlanc.isSelected(), niveau);
+			new Fenetre(this.getX()*2, this.getY()*2, toggleBlanc.isSelected(), niveau);
 		}
 	}
 

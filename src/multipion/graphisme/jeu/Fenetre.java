@@ -125,7 +125,7 @@ public class Fenetre extends JFrame implements ActionListener{
 		this.setSize(dim);
 		this.setMinimumSize(dim);
 		initFenetre();
-		this.setLocation(x - this.getWidth()/2, y - this.getHeight()/2);
+		this.setLocation(x +100 - this.getWidth(), y+100 - this.getHeight());
 		this.setVisible(true);
 		this.setIconImage(MultiPion.ICON);
 	}
@@ -140,7 +140,7 @@ public class Fenetre extends JFrame implements ActionListener{
 	 * @param valeursNoir valeurs des constantes de l'ia noir, null si pas de niveau 3
 	 */
 	public Fenetre(int x, int y, int niveauBlanc, int niveauNoir, ValeursEvaluation valeursBlanc, ValeursEvaluation valeursNoir){
-		super("Jeu d'echecs");
+		super("Jeu MultiPion");
 		jeu = new Jeu(this, niveauBlanc, niveauNoir, valeursBlanc, valeursNoir);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Dimension dim = new Dimension(Case.CASE_LENGTH * 14, Case.CASE_LENGTH * 12);
@@ -339,7 +339,8 @@ public class Fenetre extends JFrame implements ActionListener{
 	public void Victoire(String str, String fin){
 		
 		new MessageFin(this, str, fin);
-		//JOptionPane.showMessageDialog(chat_text, str);
+		
+		
 		
 	}
 	

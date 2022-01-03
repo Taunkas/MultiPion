@@ -209,6 +209,10 @@ public class IAminimax extends Joueur implements IA{
 	private boolean jouerCoup(NoeudMiniMax noeud){
 		Piece pieceSelect = jeu.getPlateau().getCase(noeud.depart.x, noeud.depart.y);
 		
+		System.out.println(pieceSelect);
+		System.out.println(noeud.arrivee.x);
+		System.out.println(noeud.arrivee.y);
+		
 		int valeurPrerequis = jeu.recherchePrerequis(pieceSelect, noeud.arrivee.x, noeud.arrivee.y);
 		
 		//Deplace la piece

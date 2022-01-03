@@ -139,19 +139,23 @@ public class Piece {
 	            this.y = y;
 	            plateau.setCase(this.x, this.y, this);
 	            
-	            //Test de la promotion du pion
+	            //Test de fin de partie en cas de bout de plateau
 	            	Pion p = (Pion) this;
 					if(p.isPromotion()){
 						coup.isTransformation = true;
-							plateau.getJeu().getFenetre().Victoire(p.getCouleur(),"en allant bout du plateau.");
+						
+						
+						multipion.jeu.Jeu.fin=true;
+						
+						plateau.getJeu().getFenetre().Victoire(p.getCouleur(),"en allant bout du plateau.");
 					}
 	            plateau.getJeu().getHistorique().addCoupPGN(coup);
 	            return true;
             }
             else{
-            	if(!plateau.getJeu().isServer()){
+            	
             		plateau.getJeu().getFenetre().addLogPartie("Il y a une piece qui gene le deplacement");
-            	}
+            	
                 return false;
             }
         }

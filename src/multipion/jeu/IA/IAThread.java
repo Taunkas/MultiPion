@@ -65,7 +65,7 @@ public class IAThread extends Thread{
 		this.niveau = niveau;
 		this.valeurs = valeurs;
 		if(niveau == 3){
-			joueurIA = new IAcomplet(couleur, jeu, this, valeurs);
+			joueurIA = new IAminimax(couleur, jeu, this, valeurs);
 		}else if(niveau == 2){
 			joueurIA = new IAaleatoire2(couleur, jeu);
 		}else{

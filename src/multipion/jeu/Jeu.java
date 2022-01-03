@@ -21,11 +21,9 @@ import javax.swing.JOptionPane;
 public class Jeu{
 	
 	/**
-	 * Event du jeu pour la partie client/serveur
+	 * fin de jeux true si la partie est fini false sinon. Initalisé à false
 	 */
-	protected enum Event{
-		ECHEC_MAT_SUR_SOI, ECHEC_SUR_SOI, RIEN, ECHEC, ECHEC_MAT, PAT
-	};
+	public static boolean fin = false;
 	
 	/**
 	 * Plateau courant
@@ -43,14 +41,6 @@ public class Jeu{
 	private boolean vsIA;
 	
 	/**
-	 * Si le jeu est un serveur
-	 */
-	protected boolean estServeur;
-	
-	/**
-	 * Vrai si le jeu est en reseau
-	 */
-	protected boolean vsInternet;
 	
 	/**
 	 * Instance du Joueur blanc
@@ -100,7 +90,6 @@ public class Jeu{
 		plateau = null;
 		prises = null;
 		vsIA = false;
-		vsInternet = false;
 		joueurBlanc = null;
 		joueurNoir = null;
 		joueurCourant = null;
@@ -127,6 +116,7 @@ public class Jeu{
 		this.fenetre = fenetre;
 		vsIA = false;
 		plateau.miseEnPlacePlateau();
+		fin=false;
 	}
 	
 	
@@ -159,6 +149,7 @@ public class Jeu{
 		this.prises = new ArrayList<Piece>();
 		vsIA = true;
 		plateau.miseEnPlacePlateau();
+		fin=false;
 	}
 	
 	/**
@@ -191,6 +182,7 @@ public class Jeu{
 		this.prises = new ArrayList<Piece>();
 		this.vsIA = true;
 		plateau.miseEnPlacePlateau();
+		fin=false;
 	}
 
 	/**
@@ -234,11 +226,12 @@ public class Jeu{
 					if(a.coupPossible(u, v)==true){
 						tmp++;
 					}else {	
-					}	
-			}}}
-			System.out.print(tmp);
+						}	
+					}
+				}
+		}
 			if(tmp==0) {
-				System.out.print(coul+" est bloquer");
+				fin=true;
 				plateau.getJeu().getFenetre().Victoire(p.getCouleur(),"en bloquant votre adversaire.");
 			}
 		}
@@ -253,7 +246,7 @@ public class Jeu{
 	 */
 	public void setPieceSelectionee(int x, int y){
 		pieceSelectionee = plateau.getCase(x, y);
-		if(joueurCourant.estHumain && !estServeur){
+		if(joueurCourant.estHumain){
 			fenetre.getGrille().ajouterDeplacementPossible(pieceSelectionee.casesPossibles());
 		}
 		
@@ -508,21 +501,6 @@ public class Jeu{
 		return this.iaThread2;
 	}
 	
-	/**
-	 * Getter pour savoir si le jeu est un serveur
-	 * @return boolean
-	 */
-	public boolean isServer(){
-		return estServeur;
-	}
-	
-	/**
-	 * Getter pour savoir si le jeu est en reseau
-	 * @return boolean
-	 */
-	public boolean isVsInternet(){
-		return this.vsInternet;
-	}
 	
 	/**
 	 * Stop les thread des IA

@@ -86,6 +86,8 @@ public class IAThread extends Thread{
 			this.reflechi = false;
 			jeu.jouerIA(joueurIA.getCoordonneeAJouer());
 			pause = true;
+			System.out.println(multipion.jeu.Jeu.fin);
+
 		}
 		if(MultiPion.DEBUG) MultiPion.addLog("Thread de l'IA termine", MultiPion.TypeLog.INFO);
 	}

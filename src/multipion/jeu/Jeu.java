@@ -21,11 +21,10 @@ import javax.swing.JOptionPane;
 public class Jeu{
 	
 	/**
-	 * Event du jeu pour la partie client/serveur
+	 * fin de jeux true si la partie est fini false sinon. Initalisé à false
 	 */
-	protected enum Event{
-		BLOQUER, ECHEC_SUR_SOI, RIEN, ECHEC, ECHEC_MAT, PAT
-	};
+	public static boolean fin = false;
+	
 	
 	public static boolean test_minmax = false;
 	/**
@@ -128,6 +127,7 @@ public class Jeu{
 		this.fenetre = fenetre;
 		vsIA = false;
 		plateau.miseEnPlacePlateau();
+		fin=false;
 	}
 	
 	
@@ -160,6 +160,7 @@ public class Jeu{
 		this.prises = new ArrayList<Piece>();
 		vsIA = true;
 		plateau.miseEnPlacePlateau();
+		fin=false;
 	}
 	
 	/**
@@ -192,6 +193,7 @@ public class Jeu{
 		this.prises = new ArrayList<Piece>();
 		this.vsIA = true;
 		plateau.miseEnPlacePlateau();
+		fin=false;
 	}
 
 	/**
@@ -241,6 +243,7 @@ public class Jeu{
 			}}}
 			System.out.print(tmp);
 			if(tmp==0) {
+				fin=true;
 				System.out.print(coul+" est bloquer");
 				plateau.getJeu().getFenetre().Victoire(getJoueurCourant().getCouleur(),"en bloquant votre adversaire.");
 			}}

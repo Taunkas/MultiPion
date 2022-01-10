@@ -141,9 +141,10 @@ public class Piece {
 	            plateau.setCase(this.x, this.y, this);
 	            //Test de la promotion du pion
 	            	Pion p = (Pion) this;
-					if(p.isPromotion()){
+					if(p.BoutPlateau()){
 						if(Jeu.test_minmax == false) {
-						coup.isTransformation = true;
+							coup.isTransformation = true;
+							multipion.jeu.Jeu.fin=true;
 							plateau.getJeu().getFenetre().Victoire(p.getCouleur(),"en allant bout du plateau.");
 						}
 					}
@@ -151,9 +152,8 @@ public class Piece {
 	            return true;
             }
             else{
-            	if(!plateau.getJeu().isServer()){
-            		plateau.getJeu().getFenetre().addLogPartie("Il y a une piece qui gene le deplacement");
-            	}
+            	
+            	plateau.getJeu().getFenetre().addLogPartie("Il y a une piece qui gene le deplacement");
                 return false;
             }
         }

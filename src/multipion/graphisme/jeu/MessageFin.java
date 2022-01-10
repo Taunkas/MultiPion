@@ -199,6 +199,7 @@ public class MessageFin extends JFrame implements ActionListener{
 
 				fenetre.getJeu().reset();
 				this.dispose();
+				multipion.jeu.Jeu.fin=false;
 		
 
 		}

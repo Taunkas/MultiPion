@@ -68,9 +68,12 @@ public class IAminimax extends Joueur implements IA{
 	
 	@Override
 	public void jouer(){
-		NoeudMiniMax aJouer = minimax();
-		jeu.setPieceSelectionee(aJouer.depart.x, aJouer.depart.y);
-		this.coordonneeAJouer = aJouer.arrivee;
+		// FAis jouer l'IA uniquement si la partie est n'est pas fini
+		if(multipion.jeu.Jeu.fin==false) {
+			NoeudMiniMax aJouer = minimax();
+			jeu.setPieceSelectionee(aJouer.depart.x, aJouer.depart.y);
+			this.coordonneeAJouer = aJouer.arrivee;
+		}
 	}
 
 	/**

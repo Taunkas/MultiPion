@@ -129,7 +129,7 @@ public class Pion extends Piece {
      * Detecte si le pion peut etre promu
      * @return
      */
-    public boolean isPromotion(){
+    public boolean BoutPlateau(){
     	if(this.couleur.equals("BLANC") && this.y == tailleplateau-1){
     		return true;
     	}

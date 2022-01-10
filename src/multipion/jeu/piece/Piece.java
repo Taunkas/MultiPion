@@ -2,6 +2,7 @@ package multipion.jeu.piece;
 
 import java.util.ArrayList;
 
+import multipion.jeu.Jeu;
 import multipion.jeu.Plateau;
 import multipion.sauvegarde.CoupPGN;
 import multipion.utils.Coordonnee;
@@ -138,12 +139,13 @@ public class Piece {
 	            this.x = x;
 	            this.y = y;
 	            plateau.setCase(this.x, this.y, this);
-	            
 	            //Test de la promotion du pion
 	            	Pion p = (Pion) this;
 					if(p.isPromotion()){
+						if(Jeu.test_minmax == false) {
 						coup.isTransformation = true;
 							plateau.getJeu().getFenetre().Victoire(p.getCouleur(),"en allant bout du plateau.");
+						}
 					}
 	            plateau.getJeu().getHistorique().addCoupPGN(coup);
 	            return true;

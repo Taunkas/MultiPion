@@ -2,6 +2,7 @@ package multipion.jeu.IA;
 
 import java.util.ArrayList;
 
+import multipion.graphisme.jeu.GrilleJeu;
 import multipion.jeu.Jeu;
 import multipion.jeu.piece.Piece;
 
@@ -77,42 +78,12 @@ public class Evaluation{
 		}else if(this.event.compareTo(autre.event) < 0){
 			return autre;
 		}
-		
-		if(event.equals(Event.ECHEC_MAT_SUR_SOI) || event.equals(Event.ECHEC_SUR_SOI)){
-			if(this.profondeur > autre.profondeur){
-				return this;
-			}else if(this.profondeur < autre.profondeur){
-				return autre;
-			}else{
-				if(this.valeurAttaqueDefense + this.valeurPlateau < autre.valeurAttaqueDefense + autre.valeurPlateau){
-					return autre;
-				}else{
-					return this;
-				}
-			}
-		}else if(event.equals(Event.ECHEC) || event.equals(Event.ECHEC_MAT) || event.equals(Event.PAT)){
-			if(this.profondeur < autre.profondeur){
-				return this;
-			}else if(this.profondeur > autre.profondeur){
-				return autre;
-			}else{
-				if(this.valeurAttaqueDefense + this.valeurPlateau < autre.valeurAttaqueDefense + autre.valeurPlateau){
-					return autre;
-				}else{
-					return this;
-				}
-			}
-		}else if(event.equals(Event.ERREUR)){
-			return autre;
-		}else if(autre.equals(Event.ERREUR)){
-			return this;
-		}else{
 			if(this.valeurAttaqueDefense + this.valeurPlateau < autre.valeurAttaqueDefense + autre.valeurPlateau){
 				return autre;
 			}else{
 				return this;
 			}
-		}
+		
 	}
 	
 	/**
@@ -129,13 +100,6 @@ public class Evaluation{
 			ArrayList<Piece> pieces = allPieces[k];
 			for(int i = 0; i < pieces.size(); i++){
 				Piece piece = pieces.get(i);
-				//Defense de chaque piece
-				for(int j = 0; j < pieces.size(); j++){
-					Piece pieceDefense = pieces.get(j);
-					if(pieceDefense != piece && pieceDefense.coupPossible(piece.getX(), piece.getY()) && pieceDefense.mouvementPossible(piece.getX(), piece.getY())){
-					}
-				}
-				
 				//Attaque et danger de la piece
 				int k1 = (k == 0)? 1 : 0;
 				ArrayList<Piece> piecesAdverses = allPieces[k1];
@@ -143,16 +107,12 @@ public class Evaluation{
 					Piece pieceAdverse = piecesAdverses.get(l);
 					//Piece en danger
 					if(pieceAdverse.coupPossible(piece.getX(), piece.getY()) && pieceAdverse.mouvementPossible(piece.getX(), piece.getY())){
-						if(piece.getFamille().equals("valeurs.PION")){
 							valeurPieces[k] += valeurs.DANGER * valeurs.PION;
-						}
 					}
 					
 					//Piece peut attaquer
 					if(piece.coupPossible(pieceAdverse.getX(), pieceAdverse.getY()) && piece.mouvementPossible(pieceAdverse.getX(), pieceAdverse.getY())){
-						if(pieceAdverse.getFamille().equals("valeurs.PION")){
 							valeurPieces[k] += valeurs.ATTAQUE * valeurs.PION;
-						}
 					}
 				}
 			}
@@ -193,7 +153,7 @@ public class Evaluation{
 			this.valeurPlateau += forceNombre[0] - forceNombre[1];
 		}
 		
-		this.historique = jeu.getHistorique().toStringSavePGN();
+		//this.historique = jeu.getHistorique().toStringSavePGN();
 	}
 	
 	/**

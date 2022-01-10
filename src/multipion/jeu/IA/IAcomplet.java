@@ -21,16 +21,6 @@ public class IAcomplet extends Joueur implements IA{
 	private IAminimax iaMinimax;
 	
 	/**
-	 * Reference de l'ia ouverture
-	 */
-	private IAouverture iaOuverture;
-	
-	/**
-	 * Boolean si vrai, c'est au tour de l'ia minimax
-	 */
-	private boolean tourMinimax;
-	
-	/**
 	 * Constructeur
 	 * @param couleur couleur de l'ia
 	 * @param jeu reference du jeu
@@ -40,30 +30,16 @@ public class IAcomplet extends Joueur implements IA{
 	public IAcomplet(String couleur, Jeu jeu, IAThread iaThread, ValeursEvaluation valeurs){
 		super(couleur);
 		this.estHumain = false;
-		this.tourMinimax = false;
 		
 		iaMinimax = new IAminimax(couleur, jeu, iaThread, valeurs);
-		iaOuverture = new IAouverture(couleur, jeu);
 	}
 	
 	@Override
 	public void jouer(){
-		if(tourMinimax){
-			if(MultiPion.DEBUG) MultiPion.addLog("< Joue facon Minimax >", MultiPion.TypeLog.INFO);
-			iaMinimax.jouer();
-			this.coordonneeAJouer = iaMinimax.getCoordonneeAJouer();
-		}else{
-			iaOuverture.jouer();
-			this.coordonneeAJouer = iaOuverture.getCoordonneeAJouer();
-			if(this.coordonneeAJouer == null){
-				tourMinimax = true;
-				if(MultiPion.DEBUG) MultiPion.addLog("-- Changement d'IA --", MultiPion.TypeLog.INFO);
-				iaMinimax.jouer();
-				this.coordonneeAJouer = iaMinimax.getCoordonneeAJouer();
-			}else{
-				if(MultiPion.DEBUG) MultiPion.addLog("< Joue facon ouverture >", MultiPion.TypeLog.INFO);
-			}
-		}
+		Jeu.test_minmax = true;
+		iaMinimax.jouer();
+		this.coordonneeAJouer = iaMinimax.getCoordonneeAJouer();
+		
 	}
 
 	@Override

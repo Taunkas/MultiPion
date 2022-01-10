@@ -84,16 +84,12 @@ public class IAminimax extends Joueur implements IA{
 		//Appel recursif
 		for(NoeudMiniMax noeud : noeuds){
 			long mem = compteur;
-			if(MultiPion.DEBUG) MultiPion.addLog("Evaluation en "+noeud.depart.toString()+">"+noeud.arrivee.toString(), MultiPion.TypeLog.INFO);
 			minimax(noeud, 1);
-			if(MultiPion.DEBUG) MultiPion.addLog("  => "+noeud.evaluation+" compteur :"+(compteur-mem), MultiPion.TypeLog.INFO);
+			jeu.getPlateau().annulerDernierCoup(true);
 		}
 		
 		//Renvoi l'evaluation max
 		NoeudMiniMax noeud = max(noeuds);
-		if(MultiPion.DEBUG) MultiPion.addLog("IA JOUE : "+noeud.depart.toString()+">"+noeud.arrivee.toString()+" : "+noeud.evaluation.toString(), MultiPion.TypeLog.INFO);
-		if(MultiPion.DEBUG) MultiPion.addLog("Historique du meilleur coup : "+noeud.evaluation.historique, MultiPion.TypeLog.INFO);
-		if(MultiPion.DEBUG) MultiPion.addLog("Compteur total : "+compteur, MultiPion.TypeLog.INFO);
 		compteur = 0;
 		
 		MAX_PROFONDEUR = MAX_PROFONDEUR_TEMP;
@@ -113,7 +109,6 @@ public class IAminimax extends Joueur implements IA{
 				iaThread.sleep(i);
 			}
 		}catch(Exception e){
-			MultiPion.addLog("Mise en sleep du Thread de l'ia a echoue", MultiPion.TypeLog.ERREUR);
 			e.printStackTrace();
 		}
 		
@@ -141,6 +136,7 @@ public class IAminimax extends Joueur implements IA{
 				for(int i = 0; i < noeuds.size(); i++){
 					noeudCourant = noeuds.get(i);
 					minimax(noeudCourant, profondeur+1);
+					jeu.getPlateau().annulerDernierCoup(true);
 					if(i == 0){
 						noeudMax = noeudCourant;
 					}else if(noeudMax.evaluation != noeudCourant.evaluation.compare(noeudMax.evaluation)){
@@ -155,14 +151,16 @@ public class IAminimax extends Joueur implements IA{
 				for(int i = 0; i < noeuds.size(); i++){
 					noeudCourant = noeuds.get(i);
 					minimax(noeudCourant, profondeur+1);
+					jeu.getPlateau().annulerDernierCoup(true);
 					if(i == 0){
 						noeudMin = noeudCourant;
 					}else if(noeudMin.evaluation != noeudCourant.evaluation.compare(noeudMin.evaluation)){
 						noeudMin = noeudCourant;
 					}
 				}
+				if(noeudMin != null) {
 				noeudActuel.evaluation.add(noeudMin.evaluation);
-			}
+			}}
 		}
 	}
 	
@@ -179,6 +177,7 @@ public class IAminimax extends Joueur implements IA{
 				noeuds.add(new NoeudMiniMax(piece.getX(), piece.getY(), coord.x, coord.y, jeu, valeurs));
 			}
 		}
+		System.out.println(noeuds);
 		return noeuds;
 	}
 	
@@ -198,6 +197,8 @@ public class IAminimax extends Joueur implements IA{
 				noeudMax = noeuds.get(i);
 			}
 		}
+		System.out.println(noeudMax);
+		System.out.println("oui");
 		return noeudMax;
 	}
 	
@@ -218,10 +219,7 @@ public class IAminimax extends Joueur implements IA{
 			jeu.switchJoueur();
 			noeud.evaluation.evaluerAttaqueDefense();
 		}else{
-			MultiPion.addLog("L'ia essai de jouer un coup impossible ! "+noeud.depart.toString()+">"+noeud.arrivee.toString(), MultiPion.TypeLog.WARNING);
 			jeu.getPlateau().affiche();
-			System.out.println("Historique a ce moment : "+jeu.getHistorique().toStringSavePGN());
-			System.out.println("Coup possible : "+pieceSelect.deplacer(noeud.arrivee.x, noeud.arrivee.y)+" | mouvement possible : "+pieceSelect.deplacer(noeud.arrivee.x, noeud.arrivee.y));
 			noeud.evaluation.event = Evaluation.Event.ERREUR;
 			jeu.switchJoueur();
 			noeud.evaluation.evaluerAttaqueDefense();
@@ -232,6 +230,7 @@ public class IAminimax extends Joueur implements IA{
 
 	@Override
 	public Coordonnee getCoordonneeAJouer() {
+		Jeu.test_minmax=false;
 		return this.coordonneeAJouer;
 	}
 }

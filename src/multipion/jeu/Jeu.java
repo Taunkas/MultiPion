@@ -24,9 +24,10 @@ public class Jeu{
 	 * Event du jeu pour la partie client/serveur
 	 */
 	protected enum Event{
-		ECHEC_MAT_SUR_SOI, ECHEC_SUR_SOI, RIEN, ECHEC, ECHEC_MAT, PAT
+		BLOQUER, ECHEC_SUR_SOI, RIEN, ECHEC, ECHEC_MAT, PAT
 	};
 	
+	public static boolean test_minmax = false;
 	/**
 	 * Plateau courant
 	 */
@@ -185,7 +186,7 @@ public class Jeu{
 		iaThread2.start();
 		
 		joueurCourant = joueurBlanc;
-		//historique = new Historique();
+		historique = new Historique();
 		this.fenetre = fenetre;
 		this.plateau = new Plateau(this);
 		this.prises = new ArrayList<Piece>();
@@ -219,12 +220,14 @@ public class Jeu{
 	/**
 	 * Regarde si le joueur est bloqué ou non pour égalité
 	 * @param p piece deplacer
+	 * @return 
 	 */
 	
-	public void testBloque(Piece p) {
+	public void testBloque() {
+		if(test_minmax == false) {
 		int tailleplateau=multipion.graphisme.jeu.GrilleJeu.TailleGrille;
 		int tmp =0;
-		String coul = (p.getCouleur()=="BLANC") ? "NOIR" : "BLANC";
+		String coul = (getJoueurCourant().getCouleur()=="BLANC") ? "NOIR" : "BLANC";
 			
 			ArrayList<Pion> pions = plateau.getPions(coul);
 			System.out.print(coul);
@@ -239,8 +242,8 @@ public class Jeu{
 			System.out.print(tmp);
 			if(tmp==0) {
 				System.out.print(coul+" est bloquer");
-				plateau.getJeu().getFenetre().Victoire(p.getCouleur(),"en bloquant votre adversaire.");
-			}
+				plateau.getJeu().getFenetre().Victoire(getJoueurCourant().getCouleur(),"en bloquant votre adversaire.");
+			}}
 		}
 
 		
@@ -327,7 +330,7 @@ public class Jeu{
 	 */
 	public int recherchePrerequis(Piece p, int x, int y){
 		int valeur = 1;
-
+		System.out.println(p);
 		if(p.getClass().equals(Pion.class)){
 			ArrayList<Pion> pions = plateau.getPions(p.getCouleur());
 			for(Pion a : pions){
@@ -345,6 +348,7 @@ public class Jeu{
 				}
 			}
 		}
+		
 		
 		return valeur;
 	}
@@ -404,7 +408,12 @@ public class Jeu{
 	 * Change le joueur courant (Si c'etait le joueur blanc, joueurCourant devient le joueur noir) egalement verifie si bloquer
 	 */
 	public void switchJoueur(){
-		testBloque(pieceSelectionee);
+		testBloque();
+		joueurCourant = (joueurCourant == joueurBlanc)? joueurNoir : joueurBlanc;
+		
+	}
+	
+	public void switchJoueuriA(){
 		joueurCourant = (joueurCourant == joueurBlanc)? joueurNoir : joueurBlanc;
 		
 	}

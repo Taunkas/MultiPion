@@ -103,8 +103,10 @@ public class ConfigIAvsIA extends JFrame implements ActionListener{
 	 * @param y coordonnee y de la fenetre
 	 */
 	public ConfigIAvsIA(Menu menu, int x, int y){
+		// Nom du panneau de configuration de IA vs IA
 		super("Configuration de l'IA vs IA");
 		this.menu = menu;
+		// Création de Position/dimension/autre pour la frame
 		this.setSize(new Dimension(800, 500));
 		this.setIconImage(MultiPion.ICON);
 		this.setMinimumSize(this.getSize());
@@ -428,6 +430,7 @@ public class ConfigIAvsIA extends JFrame implements ActionListener{
 		return true;
 	}
 
+	//Gère le radioButton du niveau de l'IA
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
@@ -452,6 +455,7 @@ public class ConfigIAvsIA extends JFrame implements ActionListener{
 			initValeurEvaluation();
 		}
 		
+		// Valide les informations lors du click sur valider et lance si tout est bon
 		if(source == valider){
 			if(niveau3Blanc.isSelected() || niveau3Noir.isSelected()){
 				if(checkValeur()){

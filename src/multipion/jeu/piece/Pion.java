@@ -18,7 +18,7 @@ public class Pion extends Piece {
 	
 	
     /**
-     * Verifie si la piece a deja joue
+     * Verifie si le pion a deja joue
      */
     private boolean premierCoup = true;
     
@@ -88,7 +88,7 @@ public class Pion extends Piece {
         return true;
     }
     /**
-     * Recupere les coordonnees de toutes les cases ou peut aller la piece
+     * Recupere les coordonnees de toutes les cases ou peut aller le pion
      * @return ArrayList<Coordonnee> de tous les coups possibles
      */
     public ArrayList<Coordonnee> casesPossibles(){
@@ -102,7 +102,7 @@ public class Pion extends Piece {
     				}
     				if(y <= 5 && premierCoup && plateau.getCase(x, y+1) == null && plateau.getCase(x, y+2) == null){
     					coords.add(new Coordonnee(x,y+1));
-    					//coords.add(new Coordonnee(x,y+2));
+
     				}
     				if(y < tailleplateau-1 && plateau.getCase(x, y+1) == null){
     					coords.add(new Coordonnee(x,y+1));
@@ -117,7 +117,7 @@ public class Pion extends Piece {
     				}
     				if(y >= 2 && premierCoup && plateau.getCase(x, y-1) == null && plateau.getCase(x, y-2) == null){
     					coords.add(new Coordonnee(x,y-1));
-    					//coords.add(new Coordonnee(x,y-2));
+
     				}
     				if(y > 0 && plateau.getCase(x, y-1) == null){
     					coords.add(new Coordonnee(x,y-1));
@@ -126,7 +126,7 @@ public class Pion extends Piece {
     	return coords;
     }
     /**
-     * Detecte si le pion peut etre promu
+     * Detecte si le pion peut allez au bout du plateau
      * @return
      */
     public boolean BoutPlateau(){

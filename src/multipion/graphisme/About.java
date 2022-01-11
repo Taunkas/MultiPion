@@ -33,7 +33,7 @@ public class About extends JDialog {
 	}
 	
 	/**
-	 * Construction de la fen�tre
+	 * Construction de la fenetre
 	 */
 	public void initFenetre(){
 		String text = "<html>" +

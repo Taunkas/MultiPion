@@ -65,9 +65,9 @@ public class IAThread extends Thread{
 		this.niveau = niveau;
 		this.valeurs = valeurs;
 		if(niveau == 3){
-			joueurIA = new IAcomplet(couleur, jeu, this, valeurs);
+			joueurIA = new IA3minimax(couleur, jeu, this, valeurs);
 		}else if(niveau == 2){
-			joueurIA = new IAaleatoire2(couleur, jeu);
+			joueurIA = new IA2minimaxfaible(couleur, jeu, this, valeurs);
 		}else{
 			joueurIA = new IAaleatoire(couleur, jeu);
 		}
@@ -75,21 +75,21 @@ public class IAThread extends Thread{
 	
 	@Override
 	public void run(){
-		if(MultiPion.DEBUG) MultiPion.addLog("Thread de l'ia commence", MultiPion.TypeLog.INFO);
+
 		System.out.println("Début tour Ia");
 		while(vivant){
 			checkPause();
 			if(!vivant) break;
-			if(MultiPion.DEBUG) MultiPion.addLog("IA joue ...", MultiPion.TypeLog.INFO);
+
 			this.reflechi = true;
 			joueurIA.jouer();
 			this.reflechi = false;
 			jeu.jouerIA(joueurIA.getCoordonneeAJouer());
 			pause = true;
-			System.out.println(multipion.jeu.Jeu.fin);
+
 
 		}
-		if(MultiPion.DEBUG) MultiPion.addLog("Thread de l'IA termine", MultiPion.TypeLog.INFO);
+
 	}
 	
 	/**

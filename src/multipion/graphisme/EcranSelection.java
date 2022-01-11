@@ -24,7 +24,7 @@ import multipion.graphisme.jeu.Fenetre;
 /**
  * Fenetre de selection du niveau de l'ia en mode joueur contre IA
  */
-public class EcranSelection extends JFrame implements ActionListener, ItemListener{
+public class EcranSelection extends JFrame implements ActionListener{
 	
 	/** 
 	 * Le JPanel principal
@@ -56,10 +56,6 @@ public class EcranSelection extends JFrame implements ActionListener, ItemListen
 	 */
 	private JRadioButton niveau3;
 	
-	/**
-	 * Active le mode debug
-	 */
-	private JCheckBox modeDebug;
 	
 	/**
 	 * Button valider
@@ -123,9 +119,7 @@ public class EcranSelection extends JFrame implements ActionListener, ItemListen
 		//Initialisation boutton valider et mode debug
 		valider = new JButton("Valider");
 		valider.addActionListener(this);
-		modeDebug = new JCheckBox("Debug");
-		modeDebug.addItemListener(this);
-		
+	
 		
 		//Positionnement
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -167,11 +161,6 @@ public class EcranSelection extends JFrame implements ActionListener, ItemListen
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		panelPrincipal.add(toggleNoir, gbc);
 		
-		//positionnement activer le mode debug
-		gbc.gridy = 4;
-		gbc.gridx = 0;
-		gbc.gridwidth = 1;
-		panelPrincipal.add(modeDebug, gbc);
 		
 		//positionnement boutton valider
 		gbc.gridy = 4;
@@ -182,6 +171,7 @@ public class EcranSelection extends JFrame implements ActionListener, ItemListen
 		this.setContentPane(panelPrincipal);
 	}
 
+	// Valide les informations lors du click et lance la partie !
 	@Override
 	public void actionPerformed(ActionEvent e){
 		Object source = e.getSource();
@@ -218,11 +208,5 @@ public class EcranSelection extends JFrame implements ActionListener, ItemListen
 		}
 	}
 
-	@Override
-	public void itemStateChanged(ItemEvent e) {
-		if(e.getSource().getClass().equals(JCheckBox.class)){
-			MultiPion.DEBUG = modeDebug.isSelected();
-		}
-		
-	}
+
 }

@@ -73,22 +73,23 @@ public class CaseJeu extends Case implements MouseListener{
 		}
 	}
 
+	// Gere le clicque de sélection d'une case en fonction de ou l'on clique
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		if(recoisInput){
+			// Change l'état d'une case en fonction en séléctionné si ça appartient au joueur courant
 			if(this.couleur.equals(fenetre.getJeu().getJoueurCourant().getCouleur())){
 				fenetre.getGrille().resetSelectedCases();
 				this.etat = Etat.SELECTIONE;
 				fenetre.getJeu().setPieceSelectionee(x, y);
 			}else{
+			// Sinon renvoie un message au joueur courant de séléctionner l'un de ses pions
 				if(!fenetre.getJeu().aucunePieceSelectionee()){
 					fenetre.getJeu().deplacerPiece(x, y);
 				}else{
-					fenetre.addLogPartie("Vous devez selectionnez une piece de votre couleur : "+fenetre.getJeu().getJoueurCourant().getCouleur().toLowerCase());
+					fenetre.addLogPartie("Vous devez selectionnez un pion de votre couleur : "+fenetre.getJeu().getJoueurCourant().getCouleur().toLowerCase());
 				}
 			}
-		}else{
-			if(MultiPion.DEBUG) MultiPion.addLog("Prise d'input desactivee sur les cases", MultiPion.TypeLog.INFO);
 		}
 	}
 

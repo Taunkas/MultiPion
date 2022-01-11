@@ -78,11 +78,6 @@ public class Fenetre extends JFrame implements ActionListener{
 	private JPanel coordOrdonnee;
 	
 	/**
-	 * Label du champs de text du chat
-	 */
-	private JLabel chat_text;
-	
-	/**
 	 * Taille de la grille choix de 3 à 10 
 	 */	
 	public static int taillegrille=multipion.graphisme.Menu.taillegrille;
@@ -98,8 +93,11 @@ public class Fenetre extends JFrame implements ActionListener{
 	 * @param y position y de la fenetre
 	 */
 	public Fenetre(int x, int y){
+		// nom de la JFrame
 		super("Jeu MultiPion");
+		// Créer un nouveau jeux de base donc joueur contre joueur 
 		jeu = new Jeu(this);
+		// dimension/position/autres choses utiles pour la JFrame
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Dimension dim = new Dimension(Case.CASE_LENGTH * 14, Case.CASE_LENGTH * 12);
 		this.setSize(dim);
@@ -118,8 +116,11 @@ public class Fenetre extends JFrame implements ActionListener{
 	 * @param lvlia niveau de l'ia
 	 */
 	public Fenetre(int x, int y, boolean couleur, int lvlia){
+		// nom de la JFrame
 		super("Jeu Multipion");
+		// Créer un nouveau jeux joueur vs ia et choix de la couleur et niveau de l'ia	
 		jeu = new Jeu(this, couleur, lvlia);
+		// dimension/position/autres choses utiles pour la JFrame
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Dimension dim = new Dimension(Case.CASE_LENGTH * 14, Case.CASE_LENGTH * 12);
 		this.setSize(dim);
@@ -140,8 +141,11 @@ public class Fenetre extends JFrame implements ActionListener{
 	 * @param valeursNoir valeurs des constantes de l'ia noir, null si pas de niveau 3
 	 */
 	public Fenetre(int x, int y, int niveauBlanc, int niveauNoir, ValeursEvaluation valeursBlanc, ValeursEvaluation valeursNoir){
+		// nom de la JFrame
 		super("Jeu MultiPion");
+		// Créer un nouveau jeux iavsia choix des couleurs et des niveaux des l'ia	
 		jeu = new Jeu(this, niveauBlanc, niveauNoir, valeursBlanc, valeursNoir);
+		// dimension/position/autres choses utiles pour la JFrame
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Dimension dim = new Dimension(Case.CASE_LENGTH * 14, Case.CASE_LENGTH * 12);
 		this.setSize(dim);
@@ -205,6 +209,7 @@ public class Fenetre extends JFrame implements ActionListener{
 		coordAbscisse = new JPanel();
 		coordAbscisse.setLayout(new GridLayout(1, taillegrille));
 		
+		// Lettres definissant les coordonnée du plateau
 		if(taillegrille==3) {
 			lettre='C';
 		} else if(taillegrille==4) {
@@ -223,6 +228,7 @@ public class Fenetre extends JFrame implements ActionListener{
 			lettre='J';
 		} 
 	
+		// Créer les indications lettre du plateau
 		for(char i = 'A'; i <= lettre; i++){
 			JLabel c = new JLabel(i+"", JLabel.CENTER);
 			c.setPreferredSize(new Dimension(Case.CASE_LENGTH/taillegrille*8 , 9));
@@ -230,6 +236,8 @@ public class Fenetre extends JFrame implements ActionListener{
 		}
 		coordOrdonnee = new JPanel();
 		coordOrdonnee.setLayout(new GridLayout(taillegrille, 1));
+		
+		// Créer les indications chiffres du plateau
 		for(int i = taillegrille; i >= 1; i--){
 			JLabel c = new JLabel(i+"");
 			c.setPreferredSize(new Dimension(9, Case.CASE_LENGTH/taillegrille*8 ));
@@ -239,6 +247,8 @@ public class Fenetre extends JFrame implements ActionListener{
 		//Tour de l'ia
 		tourIA = new JPanel(){
 			public void paintComponent(Graphics g){
+				
+				// Affiche un sablier lorsqu'on est est en attente de l'IA
 				try{
 					Image img = ImageIO.read(getClass().getResource(MultiPion.RES_PATH+"sablier.png"));
 					g.drawImage(img, 0, 0, this);
@@ -313,6 +323,7 @@ public class Fenetre extends JFrame implements ActionListener{
 		gp.add(tourIA);
 		gp.setVisible(false);
 		
+		// Demmare le Jeu
 		jeu.demarrerPartieIA();
 	}
 	
@@ -333,23 +344,25 @@ public class Fenetre extends JFrame implements ActionListener{
 	}
 	
 	/**
-	 * Fenetre de dialogue de selection de victoire
-	 * @return le choix
+	 * Fenetre de victoire : Crée la fenêtre de fin lorsque appelé
+	 * @param couleur couleur du gagnant
+	 * @param fin façon de gagner (Bloque son adversaire ou allez au bout du plateau
 	 */
-	public void Victoire(String str, String fin){
+	public void Victoire(String couleur, String fin){
 		
-		new MessageFin(this, str, fin);
+		new MessageFin(this, couleur, fin);
 		
 		
 		
 	}
 	
+	// Repaint la grille pour actualiser les actions prises
 	@Override
 	public void repaint(){
 		if(jeu.isVsIA()){
-			if(jeu.getIAThread() != null && jeu.getIAThread().isReflechi() && !MultiPion.DEBUG){
+			if(jeu.getIAThread() != null && jeu.getIAThread().isReflechi()  ){
 				return;
-			}else if(jeu.getIAThread2() != null && jeu.getIAThread2().isReflechi() && !MultiPion.DEBUG){
+			}else if(jeu.getIAThread2() != null && jeu.getIAThread2().isReflechi() ){
 				return;
 			}
 		}

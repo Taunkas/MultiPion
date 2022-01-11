@@ -29,10 +29,6 @@ public class MultiPion {
 	 */
 	public static Image ICON = null;
 	
-	/**
-	 * Active le mode DEBUG
-	 */
-	public static boolean DEBUG = false;
 	
 	/**
 	 * Different type de log

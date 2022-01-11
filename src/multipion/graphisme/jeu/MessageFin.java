@@ -34,7 +34,6 @@ public class MessageFin extends JFrame implements ActionListener{
 	 */
 	private JPanel conteneurGeneral;
 	
-
 	/**
 	 * conteneur des meta donnee de la partie
 	 */
@@ -59,7 +58,6 @@ public class MessageFin extends JFrame implements ActionListener{
 	 * Bouton quitter
 	 */
 	private JButton quitter;
-	
 	
 	/**
 	 * label message victoire
@@ -118,7 +116,7 @@ public class MessageFin extends JFrame implements ActionListener{
 		conteneurBoutons = new JPanel();
 		conteneurBoutons.setPreferredSize(new Dimension(450, 50));
 		
-		//Les labels
+		//Les labels récupère les infos de la la fenêtre pour personaliser le message :
 		labelvictoire = new JLabel("Bravo au joueur " +resultat+ ", vous avez gagnez !", JLabel.RIGHT);
 		
 		labelcondition = new JLabel("Vous avez remportez la partie " +Conditionfin, JLabel.RIGHT);
@@ -186,6 +184,8 @@ public class MessageFin extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
+		
+		// Boutton quitter
 		if(source == quitter){
 			this.setVisible(false);
 
@@ -194,6 +194,7 @@ public class MessageFin extends JFrame implements ActionListener{
 				new Menu();
 			
 			this.dispose();
+		//Bouton rejouer reset le jeux et la condition d'arrete fin
 		} else if(source == rejouer){
 			this.setVisible(false);
 

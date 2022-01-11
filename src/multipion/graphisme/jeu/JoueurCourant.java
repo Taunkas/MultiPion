@@ -27,7 +27,7 @@ public class JoueurCourant extends JPanel{
 	private CaseJoueur joueurNoir;
 
 	/**
-	 * Reference de la fenetre de replay
+	 * Reference de la fenetre
 	 */
 	private Fenetre fenetre;
 	

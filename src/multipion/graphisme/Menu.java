@@ -53,16 +53,6 @@ public class Menu extends JFrame implements ActionListener, MouseListener{
 	private JButton quitter;
 	
 	/**
-	 * Bouton en ligne
-	 */
-	private JButton enLigne;
-	
-	/**
-	 * Bouton replay
-	 */
-	private JButton replay;
-	
-	/**
 	 * Bouton IA contre IA
 	 */
 	private JButton iavsia;
@@ -80,32 +70,32 @@ public class Menu extends JFrame implements ActionListener, MouseListener{
 	/**
 	 * Image 1
 	 */
-	private RandomPiece image1;
+	private ImagePion image1;
 	
 	/**
 	 * Image 2
 	 */
-	private RandomPiece image2;
+	private ImagePion image2;
 	
 	/**
 	 * Image 3
 	 */
-	private RandomPiece image3;
+	private ImagePion image3;
 	
 	/**
 	 * Image 4
 	 */
-	private RandomPiece image4;
+	private ImagePion image4;
 	
 	/**
 	 * Image 5
 	 */
-	private RandomPiece image5;
+	private ImagePion image5;
 	
 	/**
 	 * Image 6
 	 */
-	private RandomPiece image6;
+	private ImagePion image6;
 	
 	/**
 	 * Taille de la grille
@@ -145,14 +135,6 @@ public class Menu extends JFrame implements ActionListener, MouseListener{
 		aPropos.addActionListener(this);
 		quitter = new JButton("Quitter");
 		quitter.addActionListener(this);
-		enLigne = new JButton("Test");
-		enLigne.setPreferredSize(taille);
-		enLigne.addMouseListener(this);
-		enLigne.addActionListener(this);
-		replay = new JButton("Replay");
-		replay.setPreferredSize(taille);
-		replay.addMouseListener(this);
-		replay.addActionListener(this);
 		dimgrille = new JTextField("3");
 		dimgrille.setPreferredSize(taille);
 		iavsia = new JButton("IA vs IA");
@@ -161,17 +143,17 @@ public class Menu extends JFrame implements ActionListener, MouseListener{
 		iavsia.addActionListener(this);
 		
 		//Images
-		image1 = new RandomPiece(true);
+		image1 = new ImagePion(true);
 		image1.setPreferredSize(new Dimension(Case.CASE_LENGTH, Case.CASE_LENGTH));
-		image2 = new RandomPiece(true);
+		image2 = new ImagePion(true);
 		image2.setPreferredSize(new Dimension(Case.CASE_LENGTH, Case.CASE_LENGTH));
-		image3 = new RandomPiece(true);
+		image3 = new ImagePion(true);
 		image3.setPreferredSize(new Dimension(Case.CASE_LENGTH, Case.CASE_LENGTH));
-		image4 = new RandomPiece(false);
+		image4 = new ImagePion(false);
 		image4.setPreferredSize(new Dimension(Case.CASE_LENGTH, Case.CASE_LENGTH));
-		image5 = new RandomPiece(false);
+		image5 = new ImagePion(false);
 		image5.setPreferredSize(new Dimension(Case.CASE_LENGTH, Case.CASE_LENGTH));
-		image6 = new RandomPiece(false);
+		image6 = new ImagePion(false);
 		image6.setPreferredSize(new Dimension(Case.CASE_LENGTH, Case.CASE_LENGTH));
 		 
 		//Initialise le Jpanel principal
@@ -233,31 +215,22 @@ public class Menu extends JFrame implements ActionListener, MouseListener{
 		//positionnement un joueur
 		gbc.gridx = 1;
 		gbc.gridy = 1;
-		gbc.gridwidth = 1;
+		gbc.gridwidth = 2;
 		gbc.gridheight = 1;
 		conteneur.add(unJoueur, gbc);
 		
 		//postionnement deux joueurs
-		gbc.gridx = 2;
+		gbc.gridy = 2;
 		conteneur.add(deuxJoueurs, gbc);
 		
-		//positionnement en ligne
-		gbc.gridx = 1;
-		gbc.gridy = 2;
-		gbc.gridwidth = 1;
-		gbc.gridheight = 1;
-		conteneur.add(enLigne, gbc);
-		
+
 		//positionnement iavsia
-		gbc.gridx = 2;
-		gbc.gridwidth = 1;
+		gbc.gridy = 3;
 		conteneur.add(iavsia, gbc);
 		
-///////////  je prend l'endroit du replay pour mettre le JTextfield (provisor)/////////////
-		//positionnement replay
-		gbc.gridx = 1;
-		gbc.gridy = 3;
-		gbc.gridwidth = 2;
+		
+		//positionnement choix de dimesnion de la grille
+		gbc.gridy = 4;
 		conteneur.add(dimgrille, gbc);
 		
 		//positionnement a propos
@@ -278,12 +251,46 @@ public class Menu extends JFrame implements ActionListener, MouseListener{
 		Object source = e.getSource();
 
 		if(source == unJoueur){
+			//Crée la nouvelle fenêtre de sélection
 			new EcranSelection(this.getX() + this.getWidth()/2, this.getY() + this.getHeight()/2, this);
-			taillegrille=Integer.parseInt(dimgrille.getText());	
+			
+			//Récupère l'info de la taille de la grille
+			//Si l'info n'est pas un nombre initialise à 3
+			try {
+				taillegrille=Integer.parseInt(dimgrille.getText());	
+			}catch (Exception 	 g) {
+				
+				// Renvoie l'erreur et met la taille sur 3
+	             System.err.println("Problème taille pas int: "  + g.getMessage());
+	             taillegrille=3;
+	          }
+			
+			//Si la taille n'est pas comprise entre 10 et 3 alors renvoie à 10 ou à 3 si au dessus ou en dessous resp
+			if(taillegrille>10) {
+				taillegrille=10;
+			}else if(taillegrille<3) {
+				taillegrille=3;
+			}
 		}
 		if(source == deuxJoueurs){
-///// CONDITION A METTRE SUR LE CHOIX DE LA TAILLE ///////////////////////////////////////////////////////////			
-			taillegrille=Integer.parseInt(dimgrille.getText());			
+		
+			//Récupère l'info de la taille de la grille
+			//Si l'info n'est pas un nombre initialise à 3
+			try {
+				taillegrille=Integer.parseInt(dimgrille.getText());	
+			}catch (Exception 	 g) {
+				
+				// Renvoie l'erreur et met la taille sur 3
+	             System.err.println("Problème taille pas int: "  + g.getMessage());
+	             taillegrille=3;
+	          }
+			
+			//Si la taille n'est pas comprise entre 10 et 3 alors renvoie à 10 ou à 3 si au dessus ou en dessous resp
+			if(taillegrille>10) {
+				taillegrille=10;
+			}else if(taillegrille<3) {
+				taillegrille=3;
+			}		
 			
 			this.setVisible(false);
 			this.dispose();
@@ -301,7 +308,24 @@ public class Menu extends JFrame implements ActionListener, MouseListener{
 		
 		
 		if(source == iavsia){
-			taillegrille=Integer.parseInt(dimgrille.getText());	
+			
+			//Récupère l'info de la taille de la grille
+			//Si l'info n'est pas un nombre initialise à 3
+			try {
+				taillegrille=Integer.parseInt(dimgrille.getText());	
+			}catch (Exception 	 g) {
+				
+				// Renvoie l'erreur et met la taille sur 3
+	             System.err.println("Problème taille pas int: "  + g.getMessage());
+	             taillegrille=3;
+	          }
+			
+			//Si la taille n'est pas comprise entre 10 et 3 alors renvoie à 10 ou à 3 si au dessus ou en dessous resp
+			if(taillegrille>10) {
+				taillegrille=10;
+			}else if(taillegrille<3) {
+				taillegrille=3;
+			}
 			new ConfigIAvsIA(this, this.getX() + this.getWidth()/2, this.getY() + this.getHeight()/2);
 		}
 	}
@@ -318,19 +342,21 @@ public class Menu extends JFrame implements ActionListener, MouseListener{
 		
 	}
 	
+	// Gère la surbrillance des images lors du passage de la souris
+	// Active
 	public void mouseEntered(MouseEvent e) {
 		Object source = e.getSource();
-		if(source == unJoueur || source == deuxJoueurs){
+		if(source == unJoueur ){
 			image1.isHover = true;
 			image4.isHover = true;
 		}
 		
-		if(source == enLigne || source == iavsia){
+		if( source == deuxJoueurs){
 			image2.isHover = true;
 			image5.isHover = true;
 		}
 		
-		if(source == replay){
+		if(source == iavsia){
 			image3.isHover = true;
 			image6.isHover = true;
 		}
@@ -338,19 +364,20 @@ public class Menu extends JFrame implements ActionListener, MouseListener{
 		this.repaint();
 	}
 	
+	// Desactive
 	public void mouseExited(MouseEvent e) {
 		Object source = e.getSource();
-		if(source == unJoueur || source == deuxJoueurs){
+		if(source == unJoueur ){
 			image1.isHover = false;
 			image4.isHover = false;
 		}
 		
-		if(source == enLigne || source == iavsia){
+		if( source == deuxJoueurs){
 			image2.isHover = false;
 			image5.isHover = false;
 		}
 		
-		if(source == replay){
+		if(source == iavsia){
 			image3.isHover = false;
 			image6.isHover = false;
 		}
@@ -359,17 +386,17 @@ public class Menu extends JFrame implements ActionListener, MouseListener{
 }
 
 /**
- * Affichage d'une piece aleatoirement
+ * Affichage d'une pes pions dans les images
  */
-class RandomPiece extends JPanel{
+class ImagePion extends JPanel{
 	
 	/**
-	 * Affichage piece
+	 * Affichage pion
 	 */
 	private String[] pieces = {"pion" };
 	
 	/**
-	 * Couleur de la piece
+	 * Couleur de la pion
 	 */
 	private char couleur;
 	
@@ -387,7 +414,7 @@ class RandomPiece extends JPanel{
 	 * Constructeur
 	 * @param isBlanc
 	 */
-	public RandomPiece(boolean isBlanc){
+	public ImagePion(boolean isBlanc){
 		super();
 		this.couleur = (isBlanc)? 'b' : 'n';
 		this.isHover = false;
@@ -398,6 +425,7 @@ class RandomPiece extends JPanel{
 	@Override
 	public void paintComponent(Graphics g){
 		
+		// Gere l'affichage des pions / chargements des images
 		try{
 			float transparence = (isHover)? 1f : 0.5f;
 			Graphics2D g2d = (Graphics2D) g;

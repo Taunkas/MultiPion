@@ -8,7 +8,7 @@ import multipion.utils.Coordonnee;
 /**
  * IA complete : utilise deux IA, IA ouverture puis IA minimax
  */
-public class IAcomplet extends Joueur implements IA{
+public class IA2minimaxfaible extends Joueur implements IA{
 	
 	/**
 	 * Coordonnee d'arrivee de la piece a jouer
@@ -18,7 +18,7 @@ public class IAcomplet extends Joueur implements IA{
 	/**
 	 * Reference de l'ia minimax
 	 */
-	private IAminimax iaMinimax;
+	private IAminimaxfaible IAMinimaxfaible;
 	
 	/**
 	 * Constructeur
@@ -27,18 +27,18 @@ public class IAcomplet extends Joueur implements IA{
 	 * @param iaThread reference du thread dans lequel est l'ia
 	 * @param valeurs reference des variables d'evaluations
 	 */
-	public IAcomplet(String couleur, Jeu jeu, IAThread iaThread, ValeursEvaluation valeurs){
+	public IA2minimaxfaible(String couleur, Jeu jeu, IAThread iaThread, ValeursEvaluation valeurs){
 		super(couleur);
 		this.estHumain = false;
 		
-		iaMinimax = new IAminimax(couleur, jeu, iaThread, valeurs);
+		IAMinimaxfaible = new IAminimaxfaible(couleur, jeu, iaThread, valeurs);
 	}
 	
 	@Override
 	public void jouer(){
 		Jeu.test_minmax = true;
-		iaMinimax.jouer();
-		this.coordonneeAJouer = iaMinimax.getCoordonneeAJouer();
+		IAMinimaxfaible.jouer();
+		this.coordonneeAJouer = IAMinimaxfaible.getCoordonneeAJouer();
 		
 	}
 

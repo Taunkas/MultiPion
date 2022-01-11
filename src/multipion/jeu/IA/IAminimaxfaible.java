@@ -13,17 +13,17 @@ import multipion.utils.Coordonnee;
  * Une IA qui joue selon l'algorithme du MiniMax
  * Explication complete <a href="https://fr.wikipedia.org/wiki/Minimax">ICI</a>
  */
-public class IAminimax extends Joueur implements IA{
+public class IAminimaxfaible extends Joueur implements IA{
 	
 	/**
-	 * Profondeur maximale de descente dans l'arbre recursif
+	 * Profondeur maximale de descente dans l'arbre recursif  ici  =1 car faible
 	 */
-	private static int MAX_PROFONDEUR = 3;
+	private static int MAX_PROFONDEUR = 1;
 	
 	/**
-	 * Profondeur maximale de la descente dans l'arbre recursif choisis par l'utilisateur
+	 * Profondeur maximale de la descente dans l'arbre recursif ici  =1 car faible
 	 */
-	public static int MAX_PROFONDEUR_TEMP = 3;
+	public static int MAX_PROFONDEUR_TEMP =1 ;
 	
 	/**
 	 * Compteur du nombre d'evaluation
@@ -57,7 +57,7 @@ public class IAminimax extends Joueur implements IA{
 	 * @param iaThread reference du thread dans lequel est l'ia
 	 * @param valeurs reference des varibles d'evaluation
 	 */
-	public IAminimax(String couleur, Jeu jeu, IAThread iaThread, ValeursEvaluation valeurs){
+	public IAminimaxfaible(String couleur, Jeu jeu, IAThread iaThread, ValeursEvaluation valeurs){
 		super(couleur);
 		this.estHumain = false;
 		this.jeu = jeu;
@@ -231,7 +231,7 @@ public class IAminimax extends Joueur implements IA{
 /**
  * Stocke une etaque des appels recursifs de l'algorithme MiniMax
  */
-class NoeudMiniMax{
+class NoeudMiniMaxfaible{
 	
 	/**
 	 * La coordonnee de la piece a bouger
@@ -257,7 +257,7 @@ class NoeudMiniMax{
 	 * @param jeu reference du jeu
 	 * @param valeurs valeurs des varibales d'evaluation
 	 */
-	public NoeudMiniMax(int xD, int yD, int xA, int yA, Jeu jeu, ValeursEvaluation valeurs){
+	public NoeudMiniMaxfaible(int xD, int yD, int xA, int yA, Jeu jeu, ValeursEvaluation valeurs){
 		depart = new Coordonnee(xD, yD);
 		arrivee = new Coordonnee(xA, yA);
 		evaluation = new Evaluation(jeu, valeurs);

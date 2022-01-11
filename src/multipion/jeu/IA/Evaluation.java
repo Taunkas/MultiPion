@@ -2,6 +2,7 @@ package multipion.jeu.IA;
 
 import java.util.ArrayList;
 
+import multipion.graphisme.Menu;
 import multipion.graphisme.jeu.GrilleJeu;
 import multipion.jeu.Jeu;
 import multipion.jeu.piece.Piece;
@@ -114,14 +115,23 @@ public class Evaluation{
 					if(piece.coupPossible(pieceAdverse.getX(), pieceAdverse.getY()) && piece.mouvementPossible(pieceAdverse.getX(), pieceAdverse.getY())){
 							valeurPieces[k] += valeurs.ATTAQUE * valeurs.PION;
 					}
+
+					if(piece.getY()==0 && piece.getCouleur()=="NOIR" || piece.getY()==Menu.taillegrille && piece.getCouleur()=="BLANC"){
+						valeurPieces[k] += valeurs.VICTOIRE * valeurs.PION;
+						
+					}
+					if(pieceAdverse.getY()==0 && piece.getCouleur()=="NOIR" || piece.getY()==Menu.taillegrille && piece.getCouleur()=="BLANC"){
+						valeurPieces[k] += valeurs.DEFAITE * valeurs.PION;
+						
+					}
 				}
 			}
 		}
-		
+	
 		if(jeu.getJoueurCourant().getCouleur().equals("BLANC")){
 			this.valeurAttaqueDefense = valeurPieces[1] - valeurPieces[0];
 		}else{
-			this.valeurAttaqueDefense = valeurPieces[0] - valeurPieces[0];
+			this.valeurAttaqueDefense = valeurPieces[0] - valeurPieces[1];
 		}
 	}
 	
@@ -172,6 +182,6 @@ public class Evaluation{
 	 * Representation en String
 	 */
 	public String toString(){
-		return "Evaluation : ["+event.toString()+"]("+this.valeurAttaqueDefense+")("+this.valeurPlateau+")";
+		return "";// "Evaluation : ["+event.toString()+"]("+this.valeurAttaqueDefense+")("+this.valeurPlateau+")";
 	}
 }

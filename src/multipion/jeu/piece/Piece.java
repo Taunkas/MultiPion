@@ -112,6 +112,7 @@ public class Piece {
     public boolean deplacer(int x,int y){
         if(coupPossible(x, y)){
             if(mouvementPossible(x,y)){
+            	
             	//Coup
             	CoupPGN coup = new CoupPGN();
             	coup.departMemoire.x = this.x;
@@ -139,12 +140,14 @@ public class Piece {
 	            this.x = x;
 	            this.y = y;
 	            plateau.setCase(this.x, this.y, this);
-	            //Test de la promotion du pion
+	            
+	            //Test de fin de partie en allant au bout du plateau 
 	            	Pion p = (Pion) this;
 					if(p.BoutPlateau()){
 						if(Jeu.test_minmax == false) {
-							coup.isTransformation = true;
+
 							multipion.jeu.Jeu.fin=true;
+							
 							plateau.getJeu().getFenetre().Victoire(p.getCouleur(),"en allant bout du plateau.");
 						}
 					}
@@ -152,8 +155,7 @@ public class Piece {
 	            return true;
             }
             else{
-            	
-            	plateau.getJeu().getFenetre().addLogPartie("Il y a une piece qui gene le deplacement");
+
                 return false;
             }
         }

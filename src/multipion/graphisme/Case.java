@@ -86,7 +86,8 @@ public class Case extends JPanel{
 	 * Gere l'affichage de la case selon son etat et la piece qu'elle contient
 	 */
 	public void paintComponent(Graphics g){
-		//fond
+		
+		//fond blanc avec contour noir pour une case
 		g.setColor(backgroundColor);
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
 		g.setColor(Color.BLACK);
@@ -100,10 +101,16 @@ public class Case extends JPanel{
 	        g2d.setComposite(AlphaComposite.getInstance(
 	            AlphaComposite.SRC_OVER, 0.3f));
 	        Color select = null;
+	        
+	        // si la piece est séléctionner change la couleur de la case (vert foncé)
 	        if(etat.equals(Etat.SELECTIONE)){
 	        	select = new Color(0, 102, 51);
+	        	
+	        // Change la couleur des déplacement possibles (vert claire)
 	        }else if(etat.equals(Etat.DEPLACEMENT_POSSIBLE)){
 	        	select = new Color(0, 204, 0);
+	        	
+	        // Change la couleur du dernier coup ici bleu
 	        }else if(etat.equals(Etat.DERNIER_COUP)){
 	        	select = new Color(0, 0, 255);
 	        }

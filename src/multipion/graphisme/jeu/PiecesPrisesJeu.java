@@ -33,6 +33,7 @@ public class PiecesPrisesJeu extends PiecesPrises{
 		this.jeu = jeu;
 	}
 	
+	// Affiche sur les côté les prises des joueurs 
 	@Override
 	public void paintComponent(Graphics g){
 		ArrayList<Piece> priseTemp = jeu.getPrises();

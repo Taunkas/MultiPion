@@ -524,21 +524,6 @@ public class Jeu{
 		return this.iaThread2;
 	}
 	
-	/**
-	 * Getter pour savoir si le jeu est un serveur
-	 * @return boolean
-	 */
-	public boolean isServer(){
-		return estServeur;
-	}
-	
-	/**
-	 * Getter pour savoir si le jeu est en reseau
-	 * @return boolean
-	 */
-	public boolean isVsInternet(){
-		return this.vsInternet;
-	}
 	
 	/**
 	 * Stop les thread des IA

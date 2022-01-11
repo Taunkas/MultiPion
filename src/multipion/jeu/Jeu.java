@@ -213,7 +213,9 @@ public class Jeu{
 	public void jouerIA(Coordonnee coord){
 		fenetre.tourIA(false);
 		if(coord != null){
+			if(fin==false) {
 			this.deplacerPiece(coord.x, coord.y);
+			}
 		}else{
 			fenetre.repaint();
 		}
@@ -334,6 +336,7 @@ public class Jeu{
 	public int recherchePrerequis(Piece p, int x, int y){
 		int valeur = 1;
 		System.out.println(p);
+
 		if(p.getClass().equals(Pion.class)){
 			ArrayList<Pion> pions = plateau.getPions(p.getCouleur());
 			for(Pion a : pions){
@@ -351,6 +354,7 @@ public class Jeu{
 				}
 			}
 		}
+	
 		
 		
 		return valeur;

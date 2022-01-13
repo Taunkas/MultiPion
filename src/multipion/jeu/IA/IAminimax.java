@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import multipion.MultiPion;
 import multipion.jeu.Jeu;
 import multipion.jeu.Joueur;
-import multipion.jeu.piece.Piece;
-import multipion.sauvegarde.CoupPGN;
+import multipion.jeu.pion.Piece;
+import multipion.saveDonnees.CoupSave;
 import multipion.utils.Coordonnee;
 
 /**
@@ -207,13 +207,13 @@ public class IAminimax extends Joueur implements IA{
 		
 		//Deplace la piece
 		if(pieceSelect.deplacer(noeud.arrivee.x, noeud.arrivee.y)){
-			CoupPGN coup = jeu.getHistorique().getDernierCoup();
+			CoupSave coup = jeu.getHistorique().getDernierCoup();
 			coup.setPrerequis(valeurPrerequis);
 			jeu.switchJoueur();
 			noeud.evaluation.evaluerAttaqueDefense();
 		}else{
 			jeu.getPlateau().affiche();
-			noeud.evaluation.event = Evaluation.Event.ERREUR;
+			noeud.evaluation.event = MinmaxValeur.Event.ERREUR;
 			jeu.switchJoueur();
 			noeud.evaluation.evaluerAttaqueDefense();
 			return true;
@@ -246,7 +246,7 @@ class NoeudMiniMax{
 	/**
 	 * Reference de l'evaluation du noeud
 	 */
-	Evaluation evaluation;
+	MinmaxValeur evaluation;
 	
 	/**
 	 * Constructeur
@@ -260,7 +260,7 @@ class NoeudMiniMax{
 	public NoeudMiniMax(int xD, int yD, int xA, int yA, Jeu jeu, ValeursEvaluation valeurs){
 		depart = new Coordonnee(xD, yD);
 		arrivee = new Coordonnee(xA, yA);
-		evaluation = new Evaluation(jeu, valeurs);
+		evaluation = new MinmaxValeur(jeu, valeurs);
 		IAminimax.compteur++;
 	}
 	

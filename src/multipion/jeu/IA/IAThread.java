@@ -1,7 +1,7 @@
 package multipion.jeu.IA;
 
 import multipion.MultiPion;
-import multipion.graphisme.Menu;
+import multipion.MenuGraphisme.Menu;
 import multipion.jeu.Jeu;
 
 /**
@@ -65,9 +65,9 @@ public class IAThread extends Thread{
 		this.niveau = niveau;
 		this.valeurs = valeurs;
 		if(niveau == 3){
-			joueurIA = new IA3minimax(couleur, jeu, this, valeurs);
+			joueurIA = new IAlevel3(couleur, jeu, this, valeurs);
 		}else if(niveau == 2){
-			joueurIA = new IA2minimaxfaible(couleur, jeu, this, valeurs);
+			joueurIA = new IAlevel2(couleur, jeu, this, valeurs);
 		}else{
 			joueurIA = new IAaleatoire(couleur, jeu);
 		}

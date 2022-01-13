@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import multipion.MultiPion;
 import multipion.jeu.Jeu;
 import multipion.jeu.Joueur;
-import multipion.jeu.piece.Piece;
+import multipion.jeu.pion.Piece;
 import multipion.utils.Coordonnee;
 
 /**
@@ -42,7 +42,7 @@ public class IAaleatoire extends Joueur implements IA{
 		//Recupere toutes les pieces de la couleurs de l'ia
 		ArrayList<Piece> pieces = (this.getCouleur().equals("BLANC"))? jeu.getPlateau().getPiecesBlanches() : jeu.getPlateau().getPiecesNoires();
 		
-		// Initialisation des paramètres
+		// Initialisation des paramï¿½tres
 		boolean tourcoupIA = true;
 		int x = -1;
 		int y = -1;
@@ -56,39 +56,39 @@ public class IAaleatoire extends Joueur implements IA{
 			int index;
 			pieceABouger = null;
 			do{
-				// genere un index aléatoire correspondant à une piece 
+				// genere un index alï¿½atoire correspondant ï¿½ une piece 
 				index = (int) (Math.random()*pieces.size());
 				pieceABouger = pieces.get(index);
 				
-				// Si la pièce ne peut pas bouger le code ce rexecute 
+				// Si la piï¿½ce ne peut pas bouger le code ce rexecute 
 			}while(pieceABouger.casesPossibles().isEmpty());
 
-			// genere un nombre aléatoire correspondant au différents déplacement de la pièce sélectionner
+			// genere un nombre alï¿½atoire correspondant au diffï¿½rents dï¿½placement de la piï¿½ce sï¿½lectionner
 			int j = (int) (Math.random()*pieceABouger.casesPossibles().size());
 			
-			// affecte à x et y les position choisit aléatoirement
+			// affecte ï¿½ x et y les position choisit alï¿½atoirement
 			x = pieceABouger.casesPossibles().get(j).x;
 			y = pieceABouger.casesPossibles().get(j).y;
 			
-			// Créer la nouvelle coordonnée 
+			// Crï¿½er la nouvelle coordonnï¿½e 
 			Coordonnee coordPieceABouger = new Coordonnee(pieceABouger.getX(), pieceABouger.getY());
 			
-			// Si l'on déplace la pièce à la nouvelle position
+			// Si l'on dï¿½place la piï¿½ce ï¿½ la nouvelle position
 			if(pieceABouger.deplacer(x, y)){
 				
 				// le tour du coup de l'IA se termine et ferme la boucle while
 				tourcoupIA = false;
 				
 			}else{
-				MultiPion.addLog("Erreur dans la recherche de coup pour l'ia aleatoire", MultiPion.TypeLog.ERREUR);
+				System.out.println("erreur coup IA");
 			}
 			
-			// Garde le coup alors choisit et set les nouvelles coordonnées
+			// Garde le coup alors choisit et set les nouvelles coordonnï¿½es
 			jeu.getPlateau().annulerDernierCoup(false);
 			jeu.setPieceSelectionee(coordPieceABouger.x, coordPieceABouger.y);
 			
 			}
-		// Affecte les nouvelles coordonnées à la pièce à bouger
+		// Affecte les nouvelles coordonnï¿½es ï¿½ la piï¿½ce ï¿½ bouger
 		this.coordonneeAJouer = new Coordonnee(x,y);
 		}
 		

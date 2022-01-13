@@ -3,13 +3,14 @@ package multipion.jeu.IA;
 import java.util.ArrayList;
 
 import multipion.MenuGraphisme.Menu;
+import multipion.MenuGraphisme.jeu.Grille;
 import multipion.jeu.Jeu;
 import multipion.jeu.pion.Piece;
 
 /**
  * Evalue un plateau de jeu ou un coup pour l'algorithme minimax
  */
-public class Evaluation{
+public class MinmaxValeur{
 	
 	/**
 	 * Enum pour les differents event d'une partie d'echec
@@ -58,7 +59,7 @@ public class Evaluation{
 	 * @param jeu reference du jeu
 	 * @param valeurs reference des variables d'evaluations
 	 */
-	public Evaluation(Jeu jeu, ValeursEvaluation valeurs){
+	public MinmaxValeur(Jeu jeu, ValeursEvaluation valeurs){
 		this.jeu = jeu;
 		this.event = Event.RIEN;
 		this.valeurAttaqueDefense = 0;
@@ -72,7 +73,7 @@ public class Evaluation{
 	 * @param autre l'autre evaluation a comparer
 	 * @return la meilleur evaluation des deux
 	 */
-	public Evaluation compare(Evaluation autre){
+	public MinmaxValeur compare(MinmaxValeur autre){
 		if(this.event.compareTo(autre.event) > 0){
 			return this;
 		}else if(this.event.compareTo(autre.event) < 0){
@@ -169,7 +170,7 @@ public class Evaluation{
 	 * Ajoute une evaluation a l'objet
 	 * @param add l'evaluation a ajouter
 	 */
-	public void add(Evaluation add){
+	public void add(MinmaxValeur add){
 		this.profondeur = add.profondeur;
 		this.event = add.event;
 		this.valeurAttaqueDefense += add.valeurAttaqueDefense;

@@ -2,9 +2,9 @@ package multipion.jeu;
 
 import java.util.ArrayList;
 
-import multipion.jeu.piece.Piece;
-import multipion.jeu.piece.Pion;
-import multipion.sauvegarde.CoupPGN;
+import multipion.jeu.pion.Piece;
+import multipion.jeu.pion.Pion;
+import multipion.saveDonnees.CoupSave;
 /**
  * Classe qui va creer le plateau du jeu, elle est compose d'un tableau de Pieces 
  */
@@ -18,7 +18,7 @@ public class Plateau {
 	/**	
 	 *  récupère la taille de la grille
 	 */
-	public int tailleplateau=multipion.graphisme.jeu.GrilleJeu.TailleGrille;
+	public int tailleplateau=multipion.MenuGraphisme.jeu.Grille.TailleGrille;
 	
 	/**
 	 * reference du jeu
@@ -171,7 +171,7 @@ public class Plateau {
     public void annulerDernierCoup(boolean changerDeJoueur){
     	if(jeu.getHistorique().isEmpty()) return;
     	
-    	CoupPGN coup = jeu.getHistorique().getDernierCoup();
+    	CoupSave coup = jeu.getHistorique().getDernierCoup();
     	Piece pieceDuCoup = plateau[coup.arrivee.x][coup.arrivee.y];
     	if(coup.nomPiece == ' ' && ((coup.departMemoire.y == 1 && pieceDuCoup.getCouleur().equals("BLANC")) || (coup.departMemoire.y == 6 && pieceDuCoup.getCouleur().equals("NOIR")))){
     		Pion pionDuCoup = (Pion)pieceDuCoup;

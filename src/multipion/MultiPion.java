@@ -7,7 +7,7 @@ import java.util.Date;
 
 import javax.imageio.ImageIO;
 
-import multipion.graphisme.Menu;
+import multipion.MenuGraphisme.Menu;
 
 /**
  * Main qui lance le menu du jeu
@@ -53,23 +53,5 @@ public class MultiPion {
     	new Menu();
     }
 
-    /**
-     * Ajoute une ligne de log a la console
-     * @param log le message a ajouter
-     * @param type le type de message
-     */
-    public static void addLog(String log, TypeLog type){
-    	/*String typelog = "[?]";
-    	if(type.equals(TypeLog.INFO)){
-    		typelog = "[INFO]";
-    	}else if(type.equals(TypeLog.ERREUR)){
-    		typelog = "[ERREUR]";
-    	}else if(type.equals(TypeLog.WARNING)){
-    		typelog = "[WARNING]";
-    	}
-    	
-    	/*Date now =  new Date();
-    	String formatDate = new SimpleDateFormat("HH:mm:ss").format(now);
-    	System.out.println(formatDate+" "+typelog+" "+log);*/
-    }
+
 }

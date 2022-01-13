@@ -1,14 +1,13 @@
 package multipion.jeu;
 
-import multipion.graphisme.jeu.Fenetre;
-import multipion.graphisme.jeu.GrilleJeu;
+import multipion.MenuGraphisme.jeu.Fenetre;
+import multipion.MenuGraphisme.jeu.Grille;
 import multipion.jeu.IA.IAThread;
 import multipion.jeu.IA.ValeursEvaluation;
-import multipion.jeu.piece.Piece;
-import multipion.jeu.piece.Pion;
-import multipion.sauvegarde.CoupPGN;
-import multipion.sauvegarde.Historique;
-import multipion.sauvegarde.Partie;
+import multipion.jeu.pion.Piece;
+import multipion.jeu.pion.Pion;
+import multipion.saveDonnees.CoupSave;
+import multipion.saveDonnees.Historique;
 import multipion.utils.Coordonnee;
 
 import java.util.ArrayList;
@@ -21,7 +20,7 @@ import javax.swing.JOptionPane;
 public class Jeu{
 	
 	/**
-	 * fin de jeux true si la partie est fini false sinon. Initalisé à false
+	 * fin de jeux true si la partie est fini false sinon. Initalisï¿½ ï¿½ false
 	 */
 	public static boolean fin = false;
 	
@@ -222,14 +221,14 @@ public class Jeu{
 	}
 	
 	/**
-	 * Regarde si le joueur est bloqué ou non pour égalité
+	 * Regarde si le joueur est bloquï¿½ ou non pour ï¿½galitï¿½
 	 * @param p piece deplacer
 	 * @return 
 	 */
 	
 	public void testBloque() {
 		if(test_minmax == false) {
-		int tailleplateau=multipion.graphisme.jeu.GrilleJeu.TailleGrille;
+		int tailleplateau=multipion.MenuGraphisme.jeu.Grille.TailleGrille;
 		int tmp =0;
 		String coul = (getJoueurCourant().getCouleur()=="BLANC") ? "NOIR" : "BLANC";
 			
@@ -290,7 +289,7 @@ public class Jeu{
 		
 		//Deplace la piece selectionne
 		if(pieceSelectionee.deplacer(x, y)){
-			CoupPGN coup = historique.getDernierCoup();
+			CoupSave coup = historique.getDernierCoup();
 			coup.setPrerequis(valeurPrerequis);
 			switchJoueur();
 			deplacementSucces = true;
@@ -300,7 +299,7 @@ public class Jeu{
 		fenetre.getGrille().updateGrille();
 		fenetre.getGrille().resetEtatCases();
 		if(deplacementSucces){
-			CoupPGN coup = historique.getDernierCoup();
+			CoupSave coup = historique.getDernierCoup();
 			fenetre.getGrille().setCaseDernierCoup(coup.departMemoire.x, coup.departMemoire.y);
 			fenetre.getGrille().setCaseDernierCoup(coup.arrivee.x, coup.arrivee.y);
 		}
@@ -405,7 +404,7 @@ public class Jeu{
 		
 		plateau.miseEnPlacePlateau();
 		
-		fenetre.clearLogsPartie();
+		fenetre.resetlog();
 		fenetre.repaint();
 		
 		this.demarrerPartieIA();
